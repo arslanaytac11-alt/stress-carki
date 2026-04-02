@@ -10,6 +10,7 @@ import 'audio_engine.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GameState.instance.init();
+  await AudioEngine.instance.init();
   final prefs = await SharedPreferences.getInstance();
   final savedLang = prefs.getString('app_language') ?? 'tr';
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

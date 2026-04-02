@@ -41,7 +41,7 @@ class AudioEngine {
       _ambientPlayer?.setVolume(0.0);
       _clickPlayer?.setVolume(0.0);
     } else {
-      _ambientPlayer?.setVolume(0.45);
+      _ambientPlayer?.setVolume(0.40);
       _clickPlayer?.setVolume(0.7);
     }
   }
