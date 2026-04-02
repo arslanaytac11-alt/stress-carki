@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Flutter Web (tarayıcıda önizleme)",
+      "runtimeExecutable": "flutter",
+      "runtimeArgs": ["run", "-d", "web-server", "--web-port", "3000", "--web-hostname", "localhost"],
+      "port": 3000
+    },
+    {
+      "name": "Flutter Android (bağlı telefon)",
+      "runtimeExecutable": "flutter",
+      "runtimeArgs": ["run", "-d", "RFCW41BAG6W", "--debug"],
+      "port": 8080
+    }
+  ]
+}

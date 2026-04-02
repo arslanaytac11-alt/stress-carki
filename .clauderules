@@ -1,0 +1,4 @@
+- Asla her dosya değişikliği için tek tek onay isteme.
+- Değişiklikleri toplu halde (bulk) uygula.
+- Bir hata ile karşılaşırsan durma, alternatif bir çözüm dene ve sonucu raporla.
+- Kod yazarken her zaman modern standartları kullan.
