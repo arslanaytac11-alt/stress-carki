@@ -264,12 +264,6 @@ class GameState {
     return '${(_totalRpm / 1000000).toStringAsFixed(1)}M';
   }
 
-  static String _formatNum(double v) {
-    if (v < 1000) return v.toStringAsFixed(0);
-    if (v < 1000000) return '${(v / 1000).toStringAsFixed(1)}K';
-    return '${(v / 1000000).toStringAsFixed(1)}M';
-  }
-
 }
 
 /// Badge ismini locale'e göre çevir

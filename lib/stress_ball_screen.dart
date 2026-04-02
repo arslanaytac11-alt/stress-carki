@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'game_state.dart';
-import 'sound_engine.dart';
+
 import 'l10n/app_localizations.dart';
 
 // ════════════════════════════════════════════════════════════════════
@@ -55,7 +55,6 @@ class _StressBallScreenState extends State<StressBallScreen>
   DateTime _lastTick = DateTime.now();
 
   // ── Renkler ──
-  static const _blue1 = Color(0xFF4A90FF);
   static const _blue2 = Color(0xFF2962FF);
   static const _accent = Color(0xFF82B1FF);
 
@@ -202,8 +201,6 @@ class _StressBallScreenState extends State<StressBallScreen>
     final f1 = fingerList[0];
     final f2 = fingerList[1];
 
-    final midX = (f1.dx + f2.dx) / 2;
-    final midY = (f1.dy + f2.dy) / 2;
     final pinchDist = (f1 - f2).distance;
     final pinchAngle = math.atan2(f2.dy - f1.dy, f2.dx - f1.dx);
 
@@ -530,7 +527,7 @@ class _StressBallScreenState extends State<StressBallScreen>
                     icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white54, size: 20),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  Text(l?.menuStressBall?.toUpperCase() ?? 'STRES TOPU',
+                  Text(l?.menuStressBall.toUpperCase() ?? 'STRES TOPU',
                     style: const TextStyle(color: Colors.white, fontSize: 18,
                       fontWeight: FontWeight.w900, letterSpacing: 2)),
                   const Spacer(),

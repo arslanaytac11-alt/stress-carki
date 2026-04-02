@@ -76,7 +76,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) => Padding(
+      isScrollControlled: true,
+      builder: (ctx) => DraggableScrollableSheet(
+        initialChildSize: 0.55,
+        minChildSize: 0.3,
+        maxChildSize: 0.7,
+        expand: false,
+        builder: (ctx2, scrollCtrl) => Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -86,7 +92,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             const SizedBox(height: 20),
             const Icon(Icons.language, color: Colors.white54, size: 32),
             const SizedBox(height: 16),
-            ...languages.map((lang) {
+            Expanded(child: ListView(
+              controller: scrollCtrl,
+              children: languages.map((lang) {
               final isSelected = currentLocale == lang.$3;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
@@ -134,11 +142,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                 ),
               );
-            }),
-            const SizedBox(height: 12),
+            }).toList(),
+            )),
           ],
         ),
-      ),
+      ),),
     );
   }
 

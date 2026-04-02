@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'spinner_painter.dart';
 import 'spinner_collection.dart';
 import 'space_background_painter.dart';
 import 'collection_screen.dart';

@@ -158,6 +158,7 @@ class _GlassSmashScreenState extends State<GlassSmashScreen>
   int _idx = 0;
   late int _hp;
   int _smashed = 0;
+  // ignore: unused_field
   int _totalHits = 0;
 
   _GlassObject get _obj => _objects[_idx];

@@ -716,7 +716,7 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
                             const Text('🎈', style: TextStyle(fontSize: 72)),
                             const SizedBox(height: 16),
                             Text(
-                              l?.menuBalloon?.toUpperCase() ?? 'BALON PATLATMA',
+                              l?.menuBalloon.toUpperCase() ?? 'BALON PATLATMA',
                               style: const TextStyle(
                                 color: Colors.white, fontSize: 28,
                                 fontWeight: FontWeight.w900, letterSpacing: 4,
