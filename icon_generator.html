@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>App Icon Generator</title>
+<style>
+body { background: #1a1a2e; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: Arial; color: white; }
+canvas { margin: 20px; }
+button { padding: 15px 40px; font-size: 18px; background: #6C63FF; color: white; border: none; border-radius: 10px; cursor: pointer; margin: 10px; }
+button:hover { background: #5a52d5; }
+.row { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+.opt { text-align: center; cursor: pointer; border: 3px solid transparent; border-radius: 20px; padding: 10px; }
+.opt:hover, .opt.selected { border-color: #6C63FF; }
+</style>
+</head>
+<body>
+<h1>Stress Spinner - App Icon</h1>
+<div class="row" id="options"></div>
+<br>
+<canvas id="main" width="1024" height="1024"></canvas>
+<button onclick="download()">Download 1024x1024 PNG</button>
+
+<script>
+const designs = [];
+
+function drawDesign1(ctx, S) {
+    const C = S/2;
+    // Deep gradient background
+    const bg = ctx.createLinearGradient(0, 0, S, S);
+    bg.addColorStop(0, '#667eea');
+    bg.addColorStop(1, '#764ba2');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, S, S);
+
+    // Subtle pattern circles
+    for(let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.arc(C, C, S*0.45 - i*40, 0, Math.PI*2);
+        ctx.strokeStyle = `rgba(255,255,255,${0.03 + i*0.01})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
+
+    const outerR = S*0.38;
+    const innerR = S*0.13;
+    const segments = 8;
+    const colors = ['#FF6B6B','#FECA57','#48DBFB','#FF9FF3','#54A0FF','#5F27CD','#01A3A4','#F368E0'];
+
+    // Shadow
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.4)';
+    ctx.shadowBlur = S*0.05;
+    ctx.shadowOffsetY = S*0.01;
+    ctx.beginPath();
+    ctx.arc(C, C, outerR, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(0,0,0,0.01)';
+    ctx.fill();
+    ctx.restore();
+
+    // White outer ring
+    ctx.beginPath();
+    ctx.arc(C, C, outerR + S*0.012, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.fill();
+
+    for(let i = 0; i < segments; i++) {
+        const sa = (i*Math.PI*2)/segments - Math.PI/2;
+        const ea = ((i+1)*Math.PI*2)/segments - Math.PI/2;
+        ctx.beginPath();
+        ctx.moveTo(C + Math.cos(sa)*innerR, C + Math.sin(sa)*innerR);
+        ctx.arc(C, C, outerR, sa, ea);
+        ctx.lineTo(C + Math.cos(ea)*innerR, C + Math.sin(ea)*innerR);
+        ctx.arc(C, C, innerR, ea, sa, true);
+        ctx.closePath();
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+
+    // Glass effect on wheel
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(C, C, outerR, 0, Math.PI*2);
+    ctx.clip();
+    const glass = ctx.createLinearGradient(0, C - outerR, 0, C + outerR);
+    glass.addColorStop(0, 'rgba(255,255,255,0.2)');
+    glass.addColorStop(0.5, 'rgba(255,255,255,0)');
+    glass.addColorStop(1, 'rgba(0,0,0,0.1)');
+    ctx.fillStyle = glass;
+    ctx.fillRect(0, 0, S, S);
+    ctx.restore();
+
+    // Center hub
+    const hubGrad = ctx.createRadialGradient(C - S*0.02, C - S*0.02, 0, C, C, innerR);
+    hubGrad.addColorStop(0, '#FFFFFF');
+    hubGrad.addColorStop(1, '#E0E0E0');
+    ctx.beginPath();
+    ctx.arc(C, C, innerR - 3, 0, Math.PI*2);
+    ctx.fillStyle = hubGrad;
+    ctx.fill();
+
+    // Center dot
+    const dotGrad = ctx.createRadialGradient(C - 5, C - 5, 0, C, C, S*0.035);
+    dotGrad.addColorStop(0, '#8B78FF');
+    dotGrad.addColorStop(1, '#5B4CC4');
+    ctx.beginPath();
+    ctx.arc(C, C, S*0.035, 0, Math.PI*2);
+    ctx.fillStyle = dotGrad;
+    ctx.fill();
+
+    // Pointer
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.4)';
+    ctx.shadowBlur = 8;
+    const py = C - outerR - S*0.02;
+    ctx.beginPath();
+    ctx.moveTo(C, py + S*0.06);
+    ctx.lineTo(C - S*0.03, py - S*0.015);
+    ctx.lineTo(C + S*0.03, py - S*0.015);
+    ctx.closePath();
+    ctx.fillStyle = '#FF4757';
+    ctx.fill();
+    ctx.strokeStyle = '#FFF';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.restore();
+}
+
+function drawDesign2(ctx, S) {
+    const C = S/2;
+    // Dark premium background
+    const bg = ctx.createLinearGradient(0, 0, S, S);
+    bg.addColorStop(0, '#0F0C29');
+    bg.addColorStop(0.5, '#302B63');
+    bg.addColorStop(1, '#24243e');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, S, S);
+
+    const outerR = S*0.38;
+    const innerR = S*0.12;
+    const segments = 6;
+    const colors = ['#f72585','#b5179e','#7209b7','#560bad','#480ca8','#3a0ca3'];
+
+    // Glow behind wheel
+    const glowGrad = ctx.createRadialGradient(C, C, innerR, C, C, outerR + S*0.1);
+    glowGrad.addColorStop(0, 'rgba(114,9,183,0.3)');
+    glowGrad.addColorStop(1, 'rgba(114,9,183,0)');
+    ctx.fillStyle = glowGrad;
+    ctx.beginPath();
+    ctx.arc(C, C, outerR + S*0.1, 0, Math.PI*2);
+    ctx.fill();
+
+    // Neon outer ring
+    ctx.beginPath();
+    ctx.arc(C, C, outerR + 6, 0, Math.PI*2);
+    ctx.strokeStyle = '#f72585';
+    ctx.lineWidth = 4;
+    ctx.shadowColor = '#f72585';
+    ctx.shadowBlur = 20;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    for(let i = 0; i < segments; i++) {
+        const sa = (i*Math.PI*2)/segments - Math.PI/2;
+        const ea = ((i+1)*Math.PI*2)/segments - Math.PI/2;
+        ctx.beginPath();
+        ctx.moveTo(C + Math.cos(sa)*innerR, C + Math.sin(sa)*innerR);
+        ctx.arc(C, C, outerR, sa, ea);
+        ctx.lineTo(C + Math.cos(ea)*innerR, C + Math.sin(ea)*innerR);
+        ctx.arc(C, C, innerR, ea, sa, true);
+        ctx.closePath();
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+    }
+
+    // Center
+    const hubGrad = ctx.createRadialGradient(C, C, 0, C, C, innerR);
+    hubGrad.addColorStop(0, '#2D1B69');
+    hubGrad.addColorStop(1, '#1a1a2e');
+    ctx.beginPath();
+    ctx.arc(C, C, innerR - 2, 0, Math.PI*2);
+    ctx.fillStyle = hubGrad;
+    ctx.fill();
+    ctx.strokeStyle = '#f72585';
+    ctx.lineWidth = 3;
+    ctx.shadowColor = '#f72585';
+    ctx.shadowBlur = 15;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Center spiral
+    ctx.save();
+    ctx.strokeStyle = 'rgba(247,37,133,0.6)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for(let a = 0; a < Math.PI*6; a += 0.1) {
+        const r = 8 + a * 12;
+        if(r > innerR - 10) break;
+        const x = C + Math.cos(a) * r;
+        const y = C + Math.sin(a) * r;
+        if(a === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    // Pointer
+    const py = C - outerR - S*0.025;
+    ctx.beginPath();
+    ctx.moveTo(C, py + S*0.065);
+    ctx.lineTo(C - S*0.028, py - S*0.01);
+    ctx.lineTo(C + S*0.028, py - S*0.01);
+    ctx.closePath();
+    ctx.fillStyle = '#f72585';
+    ctx.shadowColor = '#f72585';
+    ctx.shadowBlur = 15;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+}
+
+function drawDesign3(ctx, S) {
+    const C = S/2;
+    // Warm gradient
+    const bg = ctx.createLinearGradient(0, 0, S, S);
+    bg.addColorStop(0, '#FA8BFF');
+    bg.addColorStop(0.5, '#2BD2FF');
+    bg.addColorStop(1, '#2BFF88');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, S, S);
+
+    const outerR = S*0.36;
+    const innerR = S*0.11;
+    const segments = 10;
+
+    // White wheel with colorful accents
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.25)';
+    ctx.shadowBlur = 30;
+    ctx.shadowOffsetY = 10;
+    ctx.beginPath();
+    ctx.arc(C, C, outerR + 8, 0, Math.PI*2);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fill();
+    ctx.restore();
+
+    const pastelColors = [
+        '#FFB3BA','#FFDFBA','#FFFFBA','#BAFFC9','#BAE1FF',
+        '#E8BAFF','#FFB3E6','#B3FFE6','#FFE6B3','#B3D4FF'
+    ];
+
+    for(let i = 0; i < segments; i++) {
+        const sa = (i*Math.PI*2)/segments - Math.PI/2;
+        const ea = ((i+1)*Math.PI*2)/segments - Math.PI/2;
+        ctx.beginPath();
+        ctx.moveTo(C + Math.cos(sa)*innerR, C + Math.sin(sa)*innerR);
+        ctx.arc(C, C, outerR, sa, ea);
+        ctx.lineTo(C + Math.cos(ea)*innerR, C + Math.sin(ea)*innerR);
+        ctx.arc(C, C, innerR, ea, sa, true);
+        ctx.closePath();
+        ctx.fillStyle = pastelColors[i];
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+    }
+
+    // Center white hub
+    ctx.beginPath();
+    ctx.arc(C, C, innerR + 5, 0, Math.PI*2);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fill();
+
+    // Center gradient dot
+    const dotGrad = ctx.createRadialGradient(C - 5, C - 5, 0, C, C, S*0.04);
+    dotGrad.addColorStop(0, '#FA8BFF');
+    dotGrad.addColorStop(1, '#2BD2FF');
+    ctx.beginPath();
+    ctx.arc(C, C, S*0.04, 0, Math.PI*2);
+    ctx.fillStyle = dotGrad;
+    ctx.fill();
+
+    // Pointer
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.3)';
+    ctx.shadowBlur = 8;
+    const py = C - outerR - S*0.03;
+    ctx.beginPath();
+    ctx.moveTo(C, py + S*0.065);
+    ctx.lineTo(C - S*0.025, py - S*0.012);
+    ctx.lineTo(C + S*0.025, py - S*0.012);
+    ctx.closePath();
+    ctx.fillStyle = '#FF6B6B';
+    ctx.fill();
+    ctx.strokeStyle = '#FFF';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.restore();
+}
+
+function drawDesign4(ctx, S) {
+    const C = S/2;
+    // Clean dark blue
+    const bg = ctx.createLinearGradient(0, 0, 0, S);
+    bg.addColorStop(0, '#1B2838');
+    bg.addColorStop(1, '#0F1923');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, S, S);
+
+    const outerR = S*0.37;
+    const midR = S*0.25;
+    const innerR = S*0.13;
+    const segments = 8;
+    const colors = ['#00D2FF','#FF6B6B','#FFD93D','#6BCB77','#4D96FF','#FF9FF3','#FF9F43','#48DBFB'];
+
+    // Outer glow
+    const glowGrad = ctx.createRadialGradient(C, C, outerR - 50, C, C, outerR + 80);
+    glowGrad.addColorStop(0, 'rgba(0,210,255,0)');
+    glowGrad.addColorStop(0.5, 'rgba(0,210,255,0.08)');
+    glowGrad.addColorStop(1, 'rgba(0,210,255,0)');
+    ctx.fillStyle = glowGrad;
+    ctx.fillRect(0, 0, S, S);
+
+    // Metallic outer ring
+    ctx.beginPath();
+    ctx.arc(C, C, outerR + 10, 0, Math.PI*2);
+    const ringGrad = ctx.createLinearGradient(C - outerR, C - outerR, C + outerR, C + outerR);
+    ringGrad.addColorStop(0, '#4A4A5A');
+    ringGrad.addColorStop(0.3, '#8A8A9A');
+    ringGrad.addColorStop(0.5, '#CACAD0');
+    ringGrad.addColorStop(0.7, '#8A8A9A');
+    ringGrad.addColorStop(1, '#4A4A5A');
+    ctx.fillStyle = ringGrad;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(C, C, outerR + 2, 0, Math.PI*2);
+    ctx.fillStyle = '#1B2838';
+    ctx.fill();
+
+    for(let i = 0; i < segments; i++) {
+        const sa = (i*Math.PI*2)/segments - Math.PI/2;
+        const ea = ((i+1)*Math.PI*2)/segments - Math.PI/2;
+        ctx.beginPath();
+        ctx.moveTo(C + Math.cos(sa)*innerR, C + Math.sin(sa)*innerR);
+        ctx.arc(C, C, outerR, sa, ea);
+        ctx.lineTo(C + Math.cos(ea)*innerR, C + Math.sin(ea)*innerR);
+        ctx.arc(C, C, innerR, ea, sa, true);
+        ctx.closePath();
+
+        const segGrad = ctx.createRadialGradient(C, C, innerR, C, C, outerR);
+        segGrad.addColorStop(0, colors[i] + '99');
+        segGrad.addColorStop(1, colors[i]);
+        ctx.fillStyle = segGrad;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+
+    // Tick marks
+    for(let i = 0; i < 32; i++) {
+        const a = (i*Math.PI*2)/32;
+        const x1 = C + Math.cos(a) * (outerR - 5);
+        const y1 = C + Math.sin(a) * (outerR - 5);
+        const x2 = C + Math.cos(a) * (outerR - (i%4===0 ? 25 : 12));
+        const y2 = C + Math.sin(a) * (outerR - (i%4===0 ? 25 : 12));
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+        ctx.lineWidth = i%4===0 ? 3 : 1.5;
+        ctx.stroke();
+    }
+
+    // Center metallic hub
+    const hubGrad = ctx.createRadialGradient(C - 15, C - 15, 0, C, C, innerR);
+    hubGrad.addColorStop(0, '#E8E8F0');
+    hubGrad.addColorStop(0.5, '#B0B0C0');
+    hubGrad.addColorStop(1, '#6A6A7A');
+    ctx.beginPath();
+    ctx.arc(C, C, innerR, 0, Math.PI*2);
+    ctx.fillStyle = hubGrad;
+    ctx.fill();
+
+    // Center bolt
+    ctx.beginPath();
+    ctx.arc(C, C, S*0.04, 0, Math.PI*2);
+    const boltGrad = ctx.createRadialGradient(C - 5, C - 5, 0, C, C, S*0.04);
+    boltGrad.addColorStop(0, '#FFF');
+    boltGrad.addColorStop(1, '#AAA');
+    ctx.fillStyle = boltGrad;
+    ctx.fill();
+
+    // Pointer - premium style
+    ctx.save();
+    ctx.shadowColor = 'rgba(255,0,0,0.4)';
+    ctx.shadowBlur = 15;
+    const py = C - outerR - S*0.035;
+    ctx.beginPath();
+    ctx.moveTo(C, py + S*0.075);
+    ctx.lineTo(C - S*0.025, py);
+    ctx.quadraticCurveTo(C, py - S*0.02, C + S*0.025, py);
+    ctx.closePath();
+    const pGrad = ctx.createLinearGradient(C, py, C, py + S*0.075);
+    pGrad.addColorStop(0, '#FF4757');
+    pGrad.addColorStop(1, '#C0392B');
+    ctx.fillStyle = pGrad;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+}
+
+// Render all 4 as thumbnails
+const allDesigns = [drawDesign1, drawDesign2, drawDesign3, drawDesign4];
+const optContainer = document.getElementById('options');
+let selected = 3; // default to design 4
+
+allDesigns.forEach((fn, idx) => {
+    const div = document.createElement('div');
+    div.className = 'opt' + (idx === selected ? ' selected' : '');
+    const c = document.createElement('canvas');
+    c.width = 200; c.height = 200;
+    const tctx = c.getContext('2d');
+    tctx.save();
+    tctx.scale(200/1024, 200/1024);
+    fn(tctx, 1024);
+    tctx.restore();
+    c.style.borderRadius = '40px';
+    div.appendChild(c);
+    const label = document.createElement('div');
+    label.textContent = 'Design ' + (idx + 1);
+    label.style.marginTop = '8px';
+    div.appendChild(label);
+    div.onclick = () => {
+        document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+        div.classList.add('selected');
+        selected = idx;
+        renderMain();
+    };
+    optContainer.appendChild(div);
+});
+
+function renderMain() {
+    const mainCanvas = document.getElementById('main');
+    const mctx = mainCanvas.getContext('2d');
+    mctx.clearRect(0, 0, 1024, 1024);
+    allDesigns[selected](mctx, 1024);
+}
+renderMain();
+
+function download() {
+    const a = document.createElement('a');
+    a.download = 'app_icon_1024x1024.png';
+    a.href = document.getElementById('main').toDataURL('image/png');
+    a.click();
+}
+</script>
+</body>
+</html>
