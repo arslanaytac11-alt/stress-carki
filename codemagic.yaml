@@ -6,9 +6,6 @@ workflows:
     integrations:
       app_store_connect: Stres Carki
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.strescarki.stressCarki
       flutter: stable
       xcode: 16.2
     scripts:
