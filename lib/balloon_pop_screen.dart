@@ -123,6 +123,7 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
   @override
   void initState() {
     super.initState();
+    GameState.instance.trackMode('balloon');
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     _loadBest();
     _loop = AnimationController(vsync: this, duration: const Duration(days: 1))
@@ -343,6 +344,7 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
     final rpm = baseRpm * multiplier;
     _score += (10 * multiplier);
 
+    GameState.instance.addBalloonPop();
     final newBadges = GameState.instance.addRpm(rpm);
     if (newBadges.isNotEmpty && mounted) {
       BadgeCelebration.show(context, newBadges.last);

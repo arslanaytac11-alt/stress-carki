@@ -322,6 +322,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get smashReset => 'Réinitialiser le Spinner';
 
   @override
+  String get smashHint => 'Touche les bras pour les casser !';
+
+  @override
   String get orbitTitle => 'ORBITE SPATIALE';
 
   @override
@@ -352,6 +355,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get glassReset => 'ENCORE';
+
+  @override
+  String get glassHitToSmash => 'FRACASSE-LE !';
 
   @override
   String get menuBalloon => 'Éclater les Ballons';
@@ -427,4 +433,42 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get menuStats => 'Statistiques';
+
+  @override
+  String levelLabel(int level) {
+    return 'Niveau $level';
+  }
+
+  @override
+  String questsCompact(int done, int total) {
+    return '$done/$total quêtes';
+  }
+
+  @override
+  String get tapToDismiss => 'Fermer';
+
+  @override
+  String questBalloonPop(int count) {
+    return 'Éclater $count ballons';
+  }
+
+  @override
+  String questGlassSmash(int count) {
+    return 'Casser $count objets';
+  }
+
+  @override
+  String questPlayModes(int count) {
+    return 'Jouer $count modes différents';
+  }
+
+  @override
+  String questPlayTime(int count) {
+    return 'Jouer $count minutes';
+  }
+
+  @override
+  String questBreath(int count) {
+    return '$count cycles de respiration';
+  }
 }

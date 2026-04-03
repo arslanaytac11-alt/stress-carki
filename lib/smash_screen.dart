@@ -56,6 +56,7 @@ class _SmashScreenState extends State<SmashScreen>
   @override
   void initState() {
     super.initState();
+    GameState.instance.trackMode('smash');
     _activeSpinner = widget.spinnerModel;
     _gameLoop = AnimationController(
       vsync: this, duration: const Duration(days: 1),
@@ -416,7 +417,7 @@ class _SmashScreenState extends State<SmashScreen>
             if (_totalHits == 0)
               Positioned(
                 left: 0, right: 0, top: _cy + 180,
-                child: const Text('👆 Kollara dokun, kopar!',
+                child: Text('👆 ${AppLocalizations.of(context)?.smashHint ?? 'Tap the arms to break them!'}',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white30, fontSize: 14, letterSpacing: 1)),
               ),
@@ -466,7 +467,7 @@ class _SmashScreenState extends State<SmashScreen>
                             Icon(Icons.catching_pokemon,
                                 color: _activeSpinner.skin.colors[0], size: 16),
                             const SizedBox(width: 6),
-                            Text(_activeSpinner.name, style: const TextStyle(
+                            Text(_activeSpinner.localizedName(context), style: const TextStyle(
                               color: Colors.white, fontSize: 11,
                               fontWeight: FontWeight.bold)),
                           ],
@@ -484,7 +485,7 @@ class _SmashScreenState extends State<SmashScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Parça bilgisi
-                  Text('${_armShards.length + _debris.length} parça',
+                  Text(AppLocalizations.of(context)?.smashPieces(_armShards.length + _debris.length) ?? '${_armShards.length + _debris.length} parça',
                     style: TextStyle(color: Colors.white.withValues(alpha: 0.4),
                       fontSize: 12, letterSpacing: 1)),
                   const SizedBox(height: 10),

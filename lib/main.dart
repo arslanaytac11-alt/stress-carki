@@ -6,11 +6,13 @@ import 'l10n/app_localizations.dart';
 import 'splash_screen.dart';
 import 'game_state.dart';
 import 'audio_engine.dart';
+import 'ad_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GameState.instance.init();
   await AudioEngine.instance.init();
+  await AdManager.instance.initialize();
   final prefs = await SharedPreferences.getInstance();
   final savedLang = prefs.getString('app_language') ?? 'tr';
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

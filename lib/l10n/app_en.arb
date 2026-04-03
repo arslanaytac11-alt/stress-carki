@@ -110,6 +110,7 @@
   "smashTitle": "SMASH",
   "smashPieces": "{count} pieces",
   "smashReset": "Reset Spinner",
+  "smashHint": "Tap the arms to break them!",
 
   "orbitTitle": "SPACE ORBIT",
   "orbitSpins": "{count} spins",
@@ -122,6 +123,7 @@
   "glassSmashed": "SHATTERED!",
   "glassAction": "Tap to fling the pieces!",
   "glassReset": "AGAIN",
+  "glassHitToSmash": "SMASH IT!",
 
   "menuBalloon": "Balloon Pop",
   "menuBalloonDesc": "Pop and relax!",
@@ -149,5 +151,20 @@
   "statsGlass": "Glass",
   "statsModePlays": "MODE PLAYS",
   "dailyQuests": "DAILY QUESTS",
-  "menuStats": "Statistics"
+  "menuStats": "Statistics",
+  "levelLabel": "Level {level}",
+  "@levelLabel": {"placeholders": {"level": {"type": "int"}}},
+  "questsCompact": "{done}/{total} quests",
+  "@questsCompact": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "tapToDismiss": "Dismiss",
+  "questBalloonPop": "Pop {count} balloons",
+  "@questBalloonPop": {"placeholders": {"count": {"type": "int"}}},
+  "questGlassSmash": "Smash {count} objects",
+  "@questGlassSmash": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayModes": "Play {count} different modes",
+  "@questPlayModes": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayTime": "Play for {count} minutes",
+  "@questPlayTime": {"placeholders": {"count": {"type": "int"}}},
+  "questBreath": "{count} breath cycles",
+  "@questBreath": {"placeholders": {"count": {"type": "int"}}}
 }

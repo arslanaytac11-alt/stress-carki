@@ -86,6 +86,7 @@ class _SpinnerScreenState extends State<SpinnerScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    GameState.instance.trackMode('spinner');
     _physics = PhysicsEngine();
     _particles = ParticleSystem();
 
@@ -104,13 +105,22 @@ class _SpinnerScreenState extends State<SpinnerScreen>
       CurvedAnimation(parent: _glowController, curve: Curves.easeInOut),
     );
 
-    // Gyroscope dinle
+    // Gyroscope dinle (iOS'ta izin yoksa veya sensor yoksa guvenle atla)
     try {
-      _gyroSub = gyroscopeEventStream().listen((e) {
-        _tiltX = (_tiltX * 0.85 + e.y * 0.15).clamp(-1.5, 1.5);
-        _tiltY = (_tiltY * 0.85 + e.x * 0.15).clamp(-1.5, 1.5);
-      });
-    } catch (_) {} // Gyroscope yoksa sessizce atla
+      _gyroSub = gyroscopeEventStream().listen(
+        (e) {
+          _tiltX = (_tiltX * 0.85 + e.y * 0.15).clamp(-1.5, 1.5);
+          _tiltY = (_tiltY * 0.85 + e.x * 0.15).clamp(-1.5, 1.5);
+        },
+        onError: (_) {
+          _gyroSub?.cancel();
+          _gyroSub = null;
+        },
+        cancelOnError: true,
+      );
+    } catch (_) {
+      _gyroSub = null;
+    }
 
     _gameLoop.forward();
     _loadRecord();
@@ -408,10 +418,16 @@ class _SpinnerScreenState extends State<SpinnerScreen>
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF0A0820),
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) => Padding(
+      builder: (ctx) => DraggableScrollableSheet(
+        initialChildSize: 0.55,
+        minChildSize: 0.3,
+        maxChildSize: 0.7,
+        expand: false,
+        builder: (ctx2, scrollCtrl) => Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -421,7 +437,9 @@ class _SpinnerScreenState extends State<SpinnerScreen>
             const SizedBox(height: 20),
             const Icon(Icons.language, color: Colors.white54, size: 32),
             const SizedBox(height: 16),
-            ...languages.map((lang) {
+            Expanded(child: ListView(
+              controller: scrollCtrl,
+              children: languages.map((lang) {
               final isSelected = currentLocale == lang.$3;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
@@ -468,11 +486,11 @@ class _SpinnerScreenState extends State<SpinnerScreen>
                   ),
                 ),
               );
-            }),
-            const SizedBox(height: 12),
+            }).toList(),
+            )),
           ],
         ),
-      ),
+      ),),
     );
   }
 
@@ -800,19 +818,22 @@ class _SpinnerScreenState extends State<SpinnerScreen>
                     child: const Icon(Icons.cyclone, color: Colors.white, size: 28),
                   ),
                   const SizedBox(width: 14),
-                  Column(
+                  Expanded(child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AppLocalizations.of(context)!.appTitle.toUpperCase(), style: TextStyle(
-                        foreground: Paint()..shader = LinearGradient(colors: theme)
-                            .createShader(const Rect.fromLTWH(0, 0, 150, 20)),
-                        fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: 2,
+                      Text(AppLocalizations.of(context)!.appTitle.toUpperCase(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          foreground: Paint()..shader = LinearGradient(colors: theme)
+                              .createShader(const Rect.fromLTWH(0, 0, 150, 20)),
+                          fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: 2,
                       )),
                       Text('v1.0', style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.3), fontSize: 11,
                       )),
                     ],
-                  ),
+                  )),
                 ],
               ),
             ),
@@ -1149,12 +1170,12 @@ class _SpinnerScreenState extends State<SpinnerScreen>
                     BoxShadow(color: theme[0].withValues(alpha: 0.15), blurRadius: 12, offset: const Offset(0, 4)),
                   ],
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.catching_pokemon, color: Colors.white, size: 18),
-                    SizedBox(width: 8),
-                    Text('ÇARKLAR', style: TextStyle(
+                    const Icon(Icons.catching_pokemon, color: Colors.white, size: 18),
+                    const SizedBox(width: 8),
+                    Text(AppLocalizations.of(context)?.collectionTitle ?? 'ÇARKLAR', style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w800,
                       fontSize: 13, letterSpacing: 2,
                     )),

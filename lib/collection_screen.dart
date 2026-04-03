@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'spinner_collection.dart';
+import 'l10n/app_localizations.dart';
 
 class CollectionScreen extends StatefulWidget {
   final double allTimeMaxRpm;
@@ -83,9 +84,9 @@ class _CollectionScreenState extends State<CollectionScreen> {
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white54),
             onPressed: () => Navigator.pop(context),
           ),
-          const Text(
-            'KOLEKSİYON',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)?.collectionTitle ?? 'KOLEKSiYON',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.w900,
@@ -124,9 +125,12 @@ class _CollectionScreenState extends State<CollectionScreen> {
     return GestureDetector(
       onTap: () {
         if (!unlocked) {
+          final l = AppLocalizations.of(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Kilit açmak için: ${s.unlockHint}'),
+              content: Text(l != null
+                  ? l.collectionUnlock(s.localizedUnlockHint(context))
+                  : 'Kilit acmak icin: ${s.unlockHint}'),
               backgroundColor: const Color(0xFF1E1E3F),
               duration: const Duration(seconds: 2),
             ),
@@ -199,7 +203,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                s.name,
+                s.localizedName(context),
                 style: TextStyle(
                   color: unlocked ? Colors.white : Colors.white38,
                   fontWeight: FontWeight.bold,
@@ -208,7 +212,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                '${s.arms} kol · ${s.skin.label}',
+                AppLocalizations.of(context)?.collectionInfo(s.arms, s.skin.localizedLabel(context)) ??
+                    '${s.arms} kol · ${s.skin.label}',
                 style: TextStyle(
                   color: unlocked ? colors[0].withValues(alpha: 0.8) : Colors.white24,
                   fontSize: 11,
@@ -217,7 +222,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
               if (!unlocked) ...[
                 const SizedBox(height: 6),
                 Text(
-                  s.unlockHint,
+                  s.localizedUnlockHint(context),
                   style:
                       const TextStyle(color: Colors.white30, fontSize: 10),
                   textAlign: TextAlign.center,

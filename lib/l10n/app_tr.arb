@@ -118,6 +118,7 @@
   "smashPieces": "{count} parça",
   "@smashPieces": {"placeholders": {"count": {"type": "int"}}},
   "smashReset": "Çarkı Sıfırla",
+  "smashHint": "Kollara dokun, kopar!",
 
   "orbitTitle": "UZAY ORBİT",
   "orbitSpins": "{count} dönüş",
@@ -131,6 +132,7 @@
   "glassSmashed": "PARAMPARÇA!",
   "glassAction": "Dokunarak parçaları fırlat!",
   "glassReset": "YENİDEN",
+  "glassHitToSmash": "VURARAK KIR!",
 
   "menuBalloon": "Balon Patlatma",
   "menuBalloonDesc": "Patlat ve rahatla!",
@@ -158,5 +160,20 @@
   "statsGlass": "Cam Kırma",
   "statsModePlays": "MOD KULLANIMLARI",
   "dailyQuests": "GÜNLÜK GÖREVLER",
-  "menuStats": "İstatistikler"
+  "menuStats": "İstatistikler",
+  "levelLabel": "Seviye {level}",
+  "@levelLabel": {"placeholders": {"level": {"type": "int"}}},
+  "questsCompact": "{done}/{total} görev",
+  "@questsCompact": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "tapToDismiss": "Kapat",
+  "questBalloonPop": "{count} balon patlat",
+  "@questBalloonPop": {"placeholders": {"count": {"type": "int"}}},
+  "questGlassSmash": "{count} cam kir",
+  "@questGlassSmash": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayModes": "{count} farkli mod oyna",
+  "@questPlayModes": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayTime": "{count} dakika oyna",
+  "@questPlayTime": {"placeholders": {"count": {"type": "int"}}},
+  "questBreath": "{count} nefes dongusu",
+  "@questBreath": {"placeholders": {"count": {"type": "int"}}}
 }

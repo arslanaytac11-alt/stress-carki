@@ -71,5 +71,15 @@
 	<array>
 		<integer>1</integer>
 	</array>
+	<!-- AdMob App ID — Production'da gercek ID'ye degistir -->
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-9257944510825127~6374451247</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
 </dict>
 </plist>

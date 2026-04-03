@@ -110,6 +110,7 @@
   "smashTitle": "ZERSTÖREN",
   "smashPieces": "{count} Teile",
   "smashReset": "Spinner zurücksetzen",
+  "smashHint": "Tippe auf die Arme, um sie abzubrechen!",
 
   "orbitTitle": "WELTRAUM-ORBIT",
   "orbitSpins": "{count} Drehungen",
@@ -122,6 +123,7 @@
   "glassSmashed": "ZERSCHMETTERT!",
   "glassAction": "Tippe um die Teile zu schleudern!",
   "glassReset": "NOCHMAL",
+  "glassHitToSmash": "ZERSCHLAGE ES!",
 
   "menuBalloon": "Ballons Platzen",
   "menuBalloonDesc": "Platze und entspanne!",
@@ -149,5 +151,20 @@
   "statsGlass": "Glas",
   "statsModePlays": "MODUS-NUTZUNG",
   "dailyQuests": "TÄGLICHE AUFGABEN",
-  "menuStats": "Statistiken"
+  "menuStats": "Statistiken",
+  "levelLabel": "Stufe {level}",
+  "@levelLabel": {"placeholders": {"level": {"type": "int"}}},
+  "questsCompact": "{done}/{total} Aufgaben",
+  "@questsCompact": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "tapToDismiss": "Schließen",
+  "questBalloonPop": "{count} Ballons platzen",
+  "@questBalloonPop": {"placeholders": {"count": {"type": "int"}}},
+  "questGlassSmash": "{count} Objekte zerschlagen",
+  "@questGlassSmash": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayModes": "{count} verschiedene Modi spielen",
+  "@questPlayModes": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayTime": "{count} Minuten spielen",
+  "@questPlayTime": {"placeholders": {"count": {"type": "int"}}},
+  "questBreath": "{count} Atemzyklen",
+  "@questBreath": {"placeholders": {"count": {"type": "int"}}}
 }

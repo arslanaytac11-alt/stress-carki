@@ -110,6 +110,7 @@
   "smashTitle": "DESTRUIR",
   "smashPieces": "{count} piezas",
   "smashReset": "Reiniciar Spinner",
+  "smashHint": "¡Toca los brazos para romperlos!",
 
   "orbitTitle": "ÓRBITA ESPACIAL",
   "orbitSpins": "{count} giros",
@@ -122,6 +123,7 @@
   "glassSmashed": "¡DESTROZADO!",
   "glassAction": "¡Toca para lanzar las piezas!",
   "glassReset": "OTRA VEZ",
+  "glassHitToSmash": "¡RÓMPELO!",
 
   "menuBalloon": "Explotar Globos",
   "menuBalloonDesc": "¡Explota y relájate!",
@@ -149,5 +151,20 @@
   "statsGlass": "Cristal",
   "statsModePlays": "USOS DE MODOS",
   "dailyQuests": "MISIONES DIARIAS",
-  "menuStats": "Estadísticas"
+  "menuStats": "Estadísticas",
+  "levelLabel": "Nivel {level}",
+  "@levelLabel": {"placeholders": {"level": {"type": "int"}}},
+  "questsCompact": "{done}/{total} misiones",
+  "@questsCompact": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "tapToDismiss": "Cerrar",
+  "questBalloonPop": "Explotar {count} globos",
+  "@questBalloonPop": {"placeholders": {"count": {"type": "int"}}},
+  "questGlassSmash": "Romper {count} objetos",
+  "@questGlassSmash": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayModes": "Jugar {count} modos diferentes",
+  "@questPlayModes": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayTime": "Jugar {count} minutos",
+  "@questPlayTime": {"placeholders": {"count": {"type": "int"}}},
+  "questBreath": "{count} ciclos de respiracion",
+  "@questBreath": {"placeholders": {"count": {"type": "int"}}}
 }

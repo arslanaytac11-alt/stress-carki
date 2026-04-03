@@ -68,6 +68,7 @@ class _StressBallScreenState extends State<StressBallScreen>
   @override
   void initState() {
     super.initState();
+    GameState.instance.trackMode('stressball');
     _loopCtrl = AnimationController(vsync: this, duration: const Duration(days: 1))
       ..addListener(_tick)..forward();
   }

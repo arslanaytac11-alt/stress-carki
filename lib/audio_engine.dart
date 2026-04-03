@@ -19,15 +19,17 @@ class AudioEngine {
 
   Future<void> init() async {
     try {
-      _ambientPlayer = AudioPlayer();
-      await _ambientPlayer!.setAsset('assets/audio/sigmamusicart-meditation-yoga-relaxing-music-380330.mp3');
-      await _ambientPlayer!.setLoopMode(LoopMode.one);
-      await _ambientPlayer!.setVolume(0.40);
-      _ambientPlayer!.play();
+      final ambient = AudioPlayer();
+      await ambient.setAsset('assets/audio/sigmamusicart-meditation-yoga-relaxing-music-380330.mp3');
+      await ambient.setLoopMode(LoopMode.one);
+      await ambient.setVolume(0.40);
+      ambient.play();
+      _ambientPlayer = ambient;
 
-      _clickPlayer = AudioPlayer();
-      await _clickPlayer!.setAsset('assets/audio/click.mp3');
-      await _clickPlayer!.setVolume(0.7);
+      final click = AudioPlayer();
+      await click.setAsset('assets/audio/click.mp3');
+      await click.setVolume(0.7);
+      _clickPlayer = click;
 
       _ready = true;
     } catch (_) {
@@ -52,10 +54,11 @@ class AudioEngine {
   }
 
   void playTouch() {
-    if (!_ready || _clickPlayer == null || _clickBusy || _muted) return;
+    final player = _clickPlayer;
+    if (!_ready || player == null || _clickBusy || _muted) return;
     _clickBusy = true;
-    _clickPlayer!.seek(Duration.zero).then((_) {
-      return _clickPlayer!.play();
+    player.seek(Duration.zero).then((_) {
+      return player.play();
     }).then((_) {
       _clickBusy = false;
     }).catchError((_) {

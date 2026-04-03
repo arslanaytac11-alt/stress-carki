@@ -322,6 +322,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get smashReset => 'Reiniciar Spinner';
 
   @override
+  String get smashHint => '¡Toca los brazos para romperlos!';
+
+  @override
   String get orbitTitle => 'ÓRBITA ESPACIAL';
 
   @override
@@ -352,6 +355,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get glassReset => 'OTRA VEZ';
+
+  @override
+  String get glassHitToSmash => '¡RÓMPELO!';
 
   @override
   String get menuBalloon => 'Explotar Globos';
@@ -427,4 +433,42 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get menuStats => 'Estadísticas';
+
+  @override
+  String levelLabel(int level) {
+    return 'Nivel $level';
+  }
+
+  @override
+  String questsCompact(int done, int total) {
+    return '$done/$total misiones';
+  }
+
+  @override
+  String get tapToDismiss => 'Cerrar';
+
+  @override
+  String questBalloonPop(int count) {
+    return 'Explotar $count globos';
+  }
+
+  @override
+  String questGlassSmash(int count) {
+    return 'Romper $count objetos';
+  }
+
+  @override
+  String questPlayModes(int count) {
+    return 'Jugar $count modos diferentes';
+  }
+
+  @override
+  String questPlayTime(int count) {
+    return 'Jugar $count minutos';
+  }
+
+  @override
+  String questBreath(int count) {
+    return '$count ciclos de respiracion';
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'physics_engine.dart';
 import 'spinner_painter.dart';
 import 'l10n/app_localizations.dart';
+import 'game_state.dart';
 
 /// Nefes egzersizi modu
 /// Spinner belirli bir ritimde döner, kullanıcı nefes alıp verir
@@ -42,6 +43,7 @@ class _BreathScreenState extends State<BreathScreen>
   @override
   void initState() {
     super.initState();
+    GameState.instance.trackMode('breath');
     _physics = PhysicsEngine();
 
     _gameLoop = AnimationController(
@@ -69,6 +71,7 @@ class _BreathScreenState extends State<BreathScreen>
       if (_breathTimer >= _totalCycle) {
         _breathTimer -= _totalCycle;
         _cycleCount++;
+        GameState.instance.addBreathCycle();
       }
 
       // Nefes fazını belirle ve hedef RPM ayarla

@@ -194,9 +194,21 @@ class _QuestTile extends StatelessWidget {
   final DailyQuest quest;
   const _QuestTile({required this.quest});
 
+  String _formatProgress(DailyQuest q) {
+    if (q.type == QuestType.playTime) {
+      // Saniye -> dakika
+      final progMin = (q.progress / 60).floor();
+      final targetMin = (q.target / 60).floor();
+      return '$progMin/$targetMin';
+    }
+    return '${q.progress.clamp(0, q.target).toStringAsFixed(0)}/${q.target.toStringAsFixed(0)}';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final progress = (quest.progress / quest.target).clamp(0.0, 1.0);
+    final questName = quest.getName(l);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(14),
@@ -210,13 +222,12 @@ class _QuestTile extends StatelessWidget {
             : Colors.white.withValues(alpha: 0.04)),
       ),
       child: Row(children: [
-        Icon(quest.completed ? Icons.check_circle : Icons.radio_button_unchecked,
-          color: quest.completed ? const Color(0xFF4CAF50) : Colors.white24, size: 22),
+        Text(quest.completed ? '✅' : quest.emoji, style: const TextStyle(fontSize: 22)),
         const SizedBox(width: 12),
         Expanded(child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${quest.target.toStringAsFixed(0)} RPM',
+            Text(questName,
               style: TextStyle(
                 color: quest.completed ? Colors.white70 : Colors.white54,
                 fontSize: 14, fontWeight: FontWeight.w700,
@@ -236,7 +247,7 @@ class _QuestTile extends StatelessWidget {
           ],
         )),
         const SizedBox(width: 10),
-        Text('${quest.progress.clamp(0, quest.target).toStringAsFixed(0)}/${quest.target.toStringAsFixed(0)}',
+        Text(_formatProgress(quest),
           style: TextStyle(color: Colors.white.withValues(alpha: 0.3), fontSize: 11)),
       ]),
     );

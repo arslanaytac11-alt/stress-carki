@@ -322,6 +322,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get smashReset => 'Çarkı Sıfırla';
 
   @override
+  String get smashHint => 'Kollara dokun, kopar!';
+
+  @override
   String get orbitTitle => 'UZAY ORBİT';
 
   @override
@@ -352,6 +355,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get glassReset => 'YENİDEN';
+
+  @override
+  String get glassHitToSmash => 'VURARAK KIR!';
 
   @override
   String get menuBalloon => 'Balon Patlatma';
@@ -427,4 +433,42 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get menuStats => 'İstatistikler';
+
+  @override
+  String levelLabel(int level) {
+    return 'Seviye $level';
+  }
+
+  @override
+  String questsCompact(int done, int total) {
+    return '$done/$total görev';
+  }
+
+  @override
+  String get tapToDismiss => 'Kapat';
+
+  @override
+  String questBalloonPop(int count) {
+    return '$count balon patlat';
+  }
+
+  @override
+  String questGlassSmash(int count) {
+    return '$count cam kir';
+  }
+
+  @override
+  String questPlayModes(int count) {
+    return '$count farkli mod oyna';
+  }
+
+  @override
+  String questPlayTime(int count) {
+    return '$count dakika oyna';
+  }
+
+  @override
+  String questBreath(int count) {
+    return '$count nefes dongusu';
+  }
 }

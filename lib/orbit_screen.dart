@@ -51,6 +51,7 @@ class _OrbitScreenState extends State<OrbitScreen>
   @override
   void initState() {
     super.initState();
+    GameState.instance.trackMode('orbit');
     _gameLoop = AnimationController(
       vsync: this, duration: const Duration(days: 1),
     )..addListener(_tick);

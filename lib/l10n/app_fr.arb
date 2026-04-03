@@ -110,6 +110,7 @@
   "smashTitle": "DÉTRUIRE",
   "smashPieces": "{count} morceaux",
   "smashReset": "Réinitialiser le Spinner",
+  "smashHint": "Touche les bras pour les casser !",
 
   "orbitTitle": "ORBITE SPATIALE",
   "orbitSpins": "{count} tours",
@@ -122,6 +123,7 @@
   "glassSmashed": "EN MIETTES !",
   "glassAction": "Touche pour lancer les morceaux !",
   "glassReset": "ENCORE",
+  "glassHitToSmash": "FRACASSE-LE !",
 
   "menuBalloon": "Éclater les Ballons",
   "menuBalloonDesc": "Éclate et détends-toi !",
@@ -149,5 +151,20 @@
   "statsGlass": "Verre",
   "statsModePlays": "UTILISATIONS DES MODES",
   "dailyQuests": "QUÊTES QUOTIDIENNES",
-  "menuStats": "Statistiques"
+  "menuStats": "Statistiques",
+  "levelLabel": "Niveau {level}",
+  "@levelLabel": {"placeholders": {"level": {"type": "int"}}},
+  "questsCompact": "{done}/{total} quêtes",
+  "@questsCompact": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "tapToDismiss": "Fermer",
+  "questBalloonPop": "Éclater {count} ballons",
+  "@questBalloonPop": {"placeholders": {"count": {"type": "int"}}},
+  "questGlassSmash": "Casser {count} objets",
+  "@questGlassSmash": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayModes": "Jouer {count} modes différents",
+  "@questPlayModes": {"placeholders": {"count": {"type": "int"}}},
+  "questPlayTime": "Jouer {count} minutes",
+  "@questPlayTime": {"placeholders": {"count": {"type": "int"}}},
+  "questBreath": "{count} cycles de respiration",
+  "@questBreath": {"placeholders": {"count": {"type": "int"}}}
 }

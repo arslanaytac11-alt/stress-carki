@@ -692,6 +692,12 @@ abstract class AppLocalizations {
   /// **'Çarkı Sıfırla'**
   String get smashReset;
 
+  /// No description provided for @smashHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kollara dokun, kopar!'**
+  String get smashHint;
+
   /// No description provided for @orbitTitle.
   ///
   /// In tr, this message translates to:
@@ -751,6 +757,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'YENİDEN'**
   String get glassReset;
+
+  /// No description provided for @glassHitToSmash.
+  ///
+  /// In tr, this message translates to:
+  /// **'VURARAK KIR!'**
+  String get glassHitToSmash;
 
   /// No description provided for @menuBalloon.
   ///
@@ -901,6 +913,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İstatistikler'**
   String get menuStats;
+
+  /// No description provided for @levelLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seviye {level}'**
+  String levelLabel(int level);
+
+  /// No description provided for @questsCompact.
+  ///
+  /// In tr, this message translates to:
+  /// **'{done}/{total} görev'**
+  String questsCompact(int done, int total);
+
+  /// No description provided for @tapToDismiss.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapat'**
+  String get tapToDismiss;
+
+  /// No description provided for @questBalloonPop.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} balon patlat'**
+  String questBalloonPop(int count);
+
+  /// No description provided for @questGlassSmash.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} cam kir'**
+  String questGlassSmash(int count);
+
+  /// No description provided for @questPlayModes.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} farkli mod oyna'**
+  String questPlayModes(int count);
+
+  /// No description provided for @questPlayTime.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} dakika oyna'**
+  String questPlayTime(int count);
+
+  /// No description provided for @questBreath.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} nefes dongusu'**
+  String questBreath(int count);
 }
 
 class _AppLocalizationsDelegate

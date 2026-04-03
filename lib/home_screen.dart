@@ -13,6 +13,7 @@ import 'breath_screen.dart';
 import 'balloon_pop_screen.dart';
 import 'stress_ball_screen.dart';
 import 'stats_screen.dart';
+import 'ad_manager.dart';
 
 // ════════════════════════════════════════════════════════════════════
 //  ANA MENÜ — Premium Tasarım
@@ -48,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void _navigate(Widget screen) {
     SoundEngine.uiTap();
+    AdManager.instance.onScreenChange();
     Navigator.push(context, PageRouteBuilder(
       pageBuilder: (_, __, ___) => screen,
       transitionsBuilder: (_, anim, __, child) => FadeTransition(
@@ -388,20 +390,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 child: const Icon(Icons.cyclone, color: Colors.white, size: 26),
                               ),
                               const SizedBox(width: 14),
-                              Column(
+                              Expanded(child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(l.appTitle.toUpperCase(), style: const TextStyle(
-                                    color: Colors.white, fontSize: 18,
-                                    fontWeight: FontWeight.w900, letterSpacing: 3,
-                                  )),
+                                  FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(l.appTitle.toUpperCase(),
+                                      style: const TextStyle(
+                                        color: Colors.white, fontSize: 18,
+                                        fontWeight: FontWeight.w900, letterSpacing: 3,
+                                    )),
+                                  ),
                                   Text(l.headerSubtitle, style: TextStyle(
                                     color: Colors.white.withValues(alpha: 0.35),
                                     fontSize: 11, letterSpacing: 1,
                                   )),
                                 ],
-                              ),
-                              const Spacer(),
+                              )),
+                              const SizedBox(width: 8),
                               // RPM badge
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -423,7 +430,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     ),
 
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
 
                     // ── Mod kartları ──
                     Expanded(
@@ -434,6 +441,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           child: ListView(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             children: [
+                              // ── XP / Level bar ──
+                              _buildLevelBar(gs, l),
+                              const SizedBox(height: 10),
+
+                              // ── Günlük görevler özeti ──
+                              _buildDailyQuestsCard(gs, l),
+                              const SizedBox(height: 14),
+
                               // Ana mod — Spinner (büyük kart)
                               _buildMainCard(
                                 icon: Icons.cyclone,
@@ -534,12 +549,141 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
+
+                    // ── Banner reklam ──
+                    const BannerAdWidget(),
                   ],
                 ),
               ),
             ],
           );
         },
+      ),
+    );
+  }
+
+  // ── XP / Level bar ──
+  Widget _buildLevelBar(GameState gs, AppLocalizations l) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: const Color(0xFF6C63FF).withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xFF6C63FF).withValues(alpha: 0.12)),
+      ),
+      child: Row(
+        children: [
+          // Level badge
+          Container(
+            width: 38, height: 38,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: const RadialGradient(colors: [Color(0xFF6C63FF), Color(0xFF3F37A1)]),
+              boxShadow: [BoxShadow(color: const Color(0xFF6C63FF).withValues(alpha: 0.3), blurRadius: 8)],
+            ),
+            alignment: Alignment.center,
+            child: Text('${gs.level}', style: const TextStyle(
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w900)),
+          ),
+          const SizedBox(width: 12),
+          Expanded(child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l.levelLabel(gs.level), style: const TextStyle(
+                color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700)),
+              const SizedBox(height: 5),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: gs.xpProgress,
+                  backgroundColor: Colors.white.withValues(alpha: 0.06),
+                  valueColor: const AlwaysStoppedAnimation(Color(0xFF6C63FF)),
+                  minHeight: 5,
+                ),
+              ),
+            ],
+          )),
+          const SizedBox(width: 10),
+          Text('${gs.xp.toStringAsFixed(0)}/${gs.xpForNextLevel.toStringAsFixed(0)}',
+            style: TextStyle(color: Colors.white.withValues(alpha: 0.3), fontSize: 10, fontWeight: FontWeight.w600)),
+        ],
+      ),
+    );
+  }
+
+  // ── Günlük görevler özet kartı ──
+  Widget _buildDailyQuestsCard(GameState gs, AppLocalizations l) {
+    final quests = gs.dailyQuests;
+    final done = gs.completedQuestsToday;
+    final total = quests.length;
+
+    return GestureDetector(
+      onTap: () => _navigate(const StatsScreen()),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: done == total && total > 0
+              ? const Color(0xFF4CAF50).withValues(alpha: 0.08)
+              : Colors.white.withValues(alpha: 0.03),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: done == total && total > 0
+              ? const Color(0xFF4CAF50).withValues(alpha: 0.15)
+              : Colors.white.withValues(alpha: 0.06)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(children: [
+              Icon(Icons.flag_rounded,
+                color: done == total && total > 0 ? const Color(0xFF4CAF50) : Colors.white38,
+                size: 18),
+              const SizedBox(width: 8),
+              Text(l.dailyQuests, style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.5), fontSize: 11,
+                fontWeight: FontWeight.w700, letterSpacing: 1)),
+              const Spacer(),
+              Text(l.questsCompact(done, total), style: TextStyle(
+                color: done == total && total > 0
+                    ? const Color(0xFF4CAF50)
+                    : Colors.white.withValues(alpha: 0.4),
+                fontSize: 11, fontWeight: FontWeight.w700)),
+            ]),
+            const SizedBox(height: 10),
+            // Mini quest bars
+            ...quests.map((q) {
+              final p = (q.progress / q.target).clamp(0.0, 1.0);
+              final questName = q.getName(l);
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Row(children: [
+                  Text(q.completed ? '✅' : q.emoji, style: const TextStyle(fontSize: 13)),
+                  const SizedBox(width: 8),
+                  Expanded(child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(questName, style: TextStyle(
+                        color: q.completed ? Colors.white54 : Colors.white38,
+                        fontSize: 11, fontWeight: FontWeight.w600,
+                        decoration: q.completed ? TextDecoration.lineThrough : null)),
+                      const SizedBox(height: 3),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(3),
+                        child: LinearProgressIndicator(
+                          value: p,
+                          backgroundColor: Colors.white.withValues(alpha: 0.04),
+                          valueColor: AlwaysStoppedAnimation(q.completed
+                              ? const Color(0xFF4CAF50).withValues(alpha: 0.5)
+                              : const Color(0xFFFF9800).withValues(alpha: 0.5)),
+                          minHeight: 3,
+                        ),
+                      ),
+                    ],
+                  )),
+                ]),
+              );
+            }),
+          ],
+        ),
       ),
     );
   }

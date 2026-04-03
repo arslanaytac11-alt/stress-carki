@@ -169,6 +169,7 @@ class _GlassSmashScreenState extends State<GlassSmashScreen>
   @override
   void initState() {
     super.initState();
+    GameState.instance.trackMode('glass');
     _hp = _objects[0].maxHP;
     _loop = AnimationController(vsync: this, duration: const Duration(days: 1))
       ..addListener(_update)
@@ -397,6 +398,7 @@ class _GlassSmashScreenState extends State<GlassSmashScreen>
       _flashAlpha = 0.7;
       _shake = 30;
       SoundEngine.glassShatter();
+      GameState.instance.addGlassSmash();
 
       // Kırılma bonusu RPM
       final breakBadges = GameState.instance.addRpm(200);
@@ -809,7 +811,7 @@ class _GlassSmashScreenState extends State<GlassSmashScreen>
                       child: child,
                     ),
                     child: Text(
-                      '👊 VURARAK KIR',
+                      '👊 ${AppLocalizations.of(context)?.glassHitToSmash ?? 'SMASH IT!'}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white24, fontSize: 14,

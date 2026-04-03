@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stress Spinner - App Store Screenshots</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a1a;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    color: #fff;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 40px;
+  }
+
+  .screenshots-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .mockup {
+    width: 270px;
+    flex-shrink: 0;
+  }
+
+  /* Each store screenshot panel - 1290x2796 ratio = ~0.461 */
+  .store-panel {
+    width: 270px;
+    height: 585px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .store-panel.gradient-1 { background: linear-gradient(180deg, #1a0a2e 0%, #0d1b3e 50%, #0a0a1a 100%); }
+  .store-panel.gradient-2 { background: linear-gradient(180deg, #0a1a2e 0%, #0d2b3e 50%, #0a0a1a 100%); }
+  .store-panel.gradient-3 { background: linear-gradient(180deg, #2e0a1a 0%, #3e1b0d 50%, #0a0a1a 100%); }
+  .store-panel.gradient-4 { background: linear-gradient(180deg, #1a2e0a 0%, #0d3e2b 50%, #0a0a1a 100%); }
+  .store-panel.gradient-5 { background: linear-gradient(180deg, #2e1a0a 0%, #3e0d2b 50%, #0a0a1a 100%); }
+
+  .caption-area {
+    padding: 24px 16px 12px;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .caption-main {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .caption-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 400;
+  }
+
+  /* iPhone frame */
+  .phone-frame {
+    position: relative;
+    width: 220px;
+    height: 448px;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .phone-bezel {
+    position: absolute;
+    inset: 0;
+    border-radius: 32px;
+    background: #1c1c1e;
+    box-shadow:
+      0 0 0 2px #333,
+      0 20px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+    padding: 8px;
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+  }
+
+  .phone-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Dynamic Island */
+  .dynamic-island {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72px;
+    height: 18px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 5;
+  }
+
+  /* Side button */
+  .side-button {
+    position: absolute;
+    right: -2px;
+    top: 100px;
+    width: 3px;
+    height: 40px;
+    background: #444;
+    border-radius: 2px;
+  }
+
+  .volume-up {
+    position: absolute;
+    left: -2px;
+    top: 80px;
+    width: 3px;
+    height: 28px;
+    background: #444;
+    border-radius: 2px;
+  }
+
+  .volume-down {
+    position: absolute;
+    left: -2px;
+    top: 116px;
+    width: 3px;
+    height: 28px;
+    background: #444;
+    border-radius: 2px;
+  }
+
+  /* Print-ready individual panels */
+  .print-section {
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  .print-section h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .print-section p {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 30px;
+  }
+
+  .print-panels {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* Full-size panels for export (1290x2796 ratio) */
+  .export-panel {
+    width: 430px;
+    height: 932px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .export-panel .caption-area {
+    padding: 44px 24px 16px;
+  }
+
+  .export-panel .caption-main {
+    font-size: 34px;
+  }
+
+  .export-panel .caption-sub {
+    font-size: 16px;
+  }
+
+  .export-panel .phone-frame {
+    width: 350px;
+    height: 714px;
+    margin-top: 14px;
+  }
+
+  .export-panel .phone-bezel {
+    border-radius: 48px;
+    padding: 12px;
+  }
+
+  .export-panel .phone-screen {
+    border-radius: 36px;
+  }
+
+  .export-panel .dynamic-island {
+    width: 100px;
+    height: 24px;
+    top: 14px;
+  }
+
+  .export-panel .side-button {
+    top: 160px;
+    height: 60px;
+  }
+
+  .export-panel .volume-up {
+    top: 130px;
+    height: 42px;
+  }
+
+  .export-panel .volume-down {
+    top: 185px;
+    height: 42px;
+  }
+
+  .panel-label {
+    color: #555;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<h1>STRESS SPINNER</h1>
+<p class="subtitle">App Store Screenshots Preview &mdash; iPhone 6.7" (1290 x 2796)</p>
+
+<!-- Compact row preview -->
+<div class="screenshots-row">
+
+  <!-- 1: Home Screen -->
+  <div class="mockup">
+    <div class="store-panel gradient-1">
+      <div class="caption-area">
+        <div class="caption-main">7 Ways to<br>Beat Stress</div>
+        <div class="caption-sub">Daily quests & level up system</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_092909.jpg" alt="Home Screen">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2: Spinner -->
+  <div class="mockup">
+    <div class="store-panel gradient-2">
+      <div class="caption-area">
+        <div class="caption-main">Spin &<br>Relax</div>
+        <div class="caption-sub">Realistic fidget spinner physics</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_091140.jpg" alt="Spinner Mode">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3: Balloon Pop -->
+  <div class="mockup">
+    <div class="store-panel gradient-3">
+      <div class="caption-area">
+        <div class="caption-main">Pop<br>Balloons</div>
+        <div class="caption-sub">Tap to pop & release tension</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_091218.jpg" alt="Balloon Pop">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4: Smash -->
+  <div class="mockup">
+    <div class="store-panel gradient-4">
+      <div class="caption-area">
+        <div class="caption-main">Smash &<br>Destroy</div>
+        <div class="caption-sub">Break things, feel better</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_091247.jpg" alt="Smash Mode">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5: Space Orbit -->
+  <div class="mockup">
+    <div class="store-panel gradient-5">
+      <div class="caption-area">
+        <div class="caption-main">Space<br>Orbit</div>
+        <div class="caption-sub">Mesmerizing cosmic spinner</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_091152.jpg" alt="Space Orbit">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Full-size export panels -->
+<div class="print-section">
+  <h2>Full Size Export Panels</h2>
+  <p>Right-click each panel below and use browser's "Inspect > Screenshot node" or a screenshot tool to capture at higher resolution</p>
+
+  <div class="print-panels">
+
+    <!-- Export 1: Home -->
+    <div class="export-panel gradient-1" id="export-1">
+      <div class="caption-area">
+        <div class="caption-main">7 Ways to<br>Beat Stress</div>
+        <div class="caption-sub">Daily quests & level up system</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_092909.jpg" alt="Home Screen">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+    <p class="panel-label">1 / 5 &mdash; Home Screen</p>
+
+    <!-- Export 2: Spinner -->
+    <div class="export-panel gradient-2" id="export-2">
+      <div class="caption-area">
+        <div class="caption-main">Spin &<br>Relax</div>
+        <div class="caption-sub">Realistic fidget spinner physics</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_091140.jpg" alt="Spinner Mode">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+    <p class="panel-label">2 / 5 &mdash; Spinner Mode</p>
+
+    <!-- Export 3: Balloon -->
+    <div class="export-panel gradient-3" id="export-3">
+      <div class="caption-area">
+        <div class="caption-main">Pop<br>Balloons</div>
+        <div class="caption-sub">Tap to pop & release tension</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_091218.jpg" alt="Balloon Pop">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+    <p class="panel-label">3 / 5 &mdash; Balloon Pop</p>
+
+    <!-- Export 4: Smash -->
+    <div class="export-panel gradient-4" id="export-4">
+      <div class="caption-area">
+        <div class="caption-main">Smash &<br>Destroy</div>
+        <div class="caption-sub">Break things, feel better</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_091247.jpg" alt="Smash Mode">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+    <p class="panel-label">4 / 5 &mdash; Smash Mode</p>
+
+    <!-- Export 5: Space Orbit -->
+    <div class="export-panel gradient-5" id="export-5">
+      <div class="caption-area">
+        <div class="caption-main">Space<br>Orbit</div>
+        <div class="caption-sub">Mesmerizing cosmic spinner</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-bezel">
+          <div class="phone-screen">
+            <div class="dynamic-island"></div>
+            <img src="ekran resimleri/Screenshot_20260403_091152.jpg" alt="Space Orbit">
+          </div>
+        </div>
+        <div class="side-button"></div>
+        <div class="volume-up"></div>
+        <div class="volume-down"></div>
+      </div>
+    </div>
+    <p class="panel-label">5 / 5 &mdash; Space Orbit</p>
+
+  </div>
+</div>
+
+</body>
+</html>

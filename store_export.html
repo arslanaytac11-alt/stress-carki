@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Store Screenshot Export</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #111;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+  }
+  h1 { font-size: 22px; margin-bottom: 6px; }
+  .info { color: #888; font-size: 13px; margin-bottom: 20px; }
+  .controls { margin-bottom: 30px; }
+  .controls button {
+    background: linear-gradient(135deg, #E53935, #C62828);
+    color: #fff;
+    border: none;
+    padding: 14px 36px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .controls button:hover { opacity: 0.9; }
+  .controls button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .status { color: #4CAF50; font-size: 14px; margin-top: 10px; min-height: 20px; }
+  .previews {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .previews canvas {
+    border-radius: 10px;
+    border: 1px solid #333;
+  }
+  .preview-item { text-align: center; }
+  .preview-item p { color: #666; font-size: 11px; margin-top: 4px; }
+  .single-dl {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 6px 16px;
+    font-size: 11px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .single-dl:hover { background: #555; }
+</style>
+</head>
+<body>
+
+<h1>STRESS SPINNER - App Store Export</h1>
+<p class="info">1290 x 2796 px (iPhone 6.7") — English</p>
+
+<div class="controls">
+  <button onclick="downloadAll()" id="dlBtn">DOWNLOAD ALL (5 PNG)</button>
+  <div class="status" id="status">Loading images...</div>
+</div>
+
+<div class="previews" id="previews"></div>
+
+<script>
+const W = 1284;
+const H = 2778;
+const PREVIEW_SCALE = 0.25;
+
+const panels = [
+  {
+    file: 'ekran resimleri/Screenshot_20260403_092909.jpg',
+    name: '01_home',
+    label: '1/5 — Home Screen',
+    title: '7 Ways to\nBeat Stress',
+    sub: 'Daily quests & level up system',
+    grad: ['#1a0a2e', '#0d1b3e', '#0a0a1a'],
+  },
+  {
+    file: 'ekran resimleri/Screenshot_20260403_091140.jpg',
+    name: '02_spinner',
+    label: '2/5 — Spinner Mode',
+    title: 'Spin &\nRelax',
+    sub: 'Realistic fidget spinner physics',
+    grad: ['#0a1a2e', '#0d2b3e', '#0a0a1a'],
+  },
+  {
+    file: 'ekran resimleri/Screenshot_20260403_091218.jpg',
+    name: '03_balloon',
+    label: '3/5 — Balloon Pop',
+    title: 'Pop\nBalloons',
+    sub: 'Tap to pop & release tension',
+    grad: ['#2e0a1a', '#3e1b0d', '#0a0a1a'],
+  },
+  {
+    file: 'ekran resimleri/Screenshot_20260403_091247.jpg',
+    name: '04_smash',
+    label: '4/5 — Smash Mode',
+    title: 'Smash &\nDestroy',
+    sub: 'Break things, feel better',
+    grad: ['#1a2e0a', '#0d3e2b', '#0a0a1a'],
+  },
+  {
+    file: 'ekran resimleri/Screenshot_20260403_091152.jpg',
+    name: '05_orbit',
+    label: '5/5 — Space Orbit',
+    title: 'Space\nOrbit',
+    sub: 'Mesmerizing cosmic spinner',
+    grad: ['#2e1a0a', '#3e0d2b', '#0a0a1a'],
+  },
+];
+
+const images = [];
+let readyCount = 0;
+
+function loadImages() {
+  panels.forEach((p, i) => {
+    const img = new Image();
+    img.onload = () => {
+      readyCount++;
+      document.getElementById('status').textContent = `Loaded ${readyCount}/5 images...`;
+      if (readyCount === 5) {
+        document.getElementById('status').textContent = 'Ready! Click to download.';
+        renderPreviews();
+      }
+    };
+    img.onerror = () => {
+      document.getElementById('status').textContent = `Error loading: ${p.file}`;
+    };
+    img.src = p.file;
+    images[i] = img;
+  });
+}
+
+function drawPanel(ctx, panel, img) {
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, panel.grad[0]);
+  grad.addColorStop(0.4, panel.grad[1]);
+  grad.addColorStop(1, panel.grad[2]);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Title text
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#ffffff';
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur = 30;
+
+  const lines = panel.title.split('\n');
+  ctx.font = '800 120px -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif';
+  const titleY = 200;
+  lines.forEach((line, i) => {
+    ctx.fillText(line, W / 2, titleY + i * 135);
+  });
+
+  // Subtitle
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.font = '400 48px -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif';
+  ctx.fillText(panel.sub, W / 2, titleY + lines.length * 135 + 20);
+
+  // Phone frame dimensions
+  const phoneW = 1020;
+  const phoneH = 2084;
+  const phoneX = (W - phoneW) / 2;
+  const phoneY = titleY + lines.length * 135 + 100;
+  const bezelR = 132;
+  const bezelPad = 30;
+
+  // Phone shadow
+  ctx.shadowColor = 'rgba(0,0,0,0.7)';
+  ctx.shadowBlur = 80;
+  ctx.shadowOffsetY = 30;
+
+  // Phone bezel
+  ctx.fillStyle = '#1c1c1e';
+  roundRect(ctx, phoneX, phoneY, phoneW, phoneH, bezelR);
+  ctx.fill();
+
+  // Bezel border
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetY = 0;
+  ctx.strokeStyle = '#444';
+  ctx.lineWidth = 7;
+  roundRect(ctx, phoneX, phoneY, phoneW, phoneH, bezelR);
+  ctx.stroke();
+
+  // Screen area
+  const screenX = phoneX + bezelPad;
+  const screenY = phoneY + bezelPad;
+  const screenW = phoneW - bezelPad * 2;
+  const screenH = phoneH - bezelPad * 2;
+  const screenR = bezelR - bezelPad + 10;
+
+  ctx.save();
+  roundRect(ctx, screenX, screenY, screenW, screenH, screenR);
+  ctx.clip();
+
+  // Draw screenshot image
+  const imgAspect = img.width / img.height;
+  const screenAspect = screenW / screenH;
+  let drawW, drawH, drawX, drawY;
+  if (imgAspect > screenAspect) {
+    drawH = screenH;
+    drawW = drawH * imgAspect;
+    drawX = screenX - (drawW - screenW) / 2;
+    drawY = screenY;
+  } else {
+    drawW = screenW;
+    drawH = drawW / imgAspect;
+    drawX = screenX;
+    drawY = screenY;
+  }
+  ctx.drawImage(img, drawX, drawY, drawW, drawH);
+
+  // Dynamic Island
+  ctx.fillStyle = '#000';
+  const diW = 270;
+  const diH = 66;
+  const diX = screenX + (screenW - diW) / 2;
+  const diY = screenY + 36;
+  roundRect(ctx, diX, diY, diW, diH, 33);
+  ctx.fill();
+
+  ctx.restore();
+
+  // Side buttons
+  ctx.fillStyle = '#555';
+  roundRect(ctx, phoneX + phoneW - 2, phoneY + 450, 8, 165, 3);
+  ctx.fill();
+  roundRect(ctx, phoneX - 6, phoneY + 360, 8, 114, 3);
+  ctx.fill();
+  roundRect(ctx, phoneX - 6, phoneY + 504, 8, 114, 3);
+  ctx.fill();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function createPanelCanvas(index) {
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  drawPanel(ctx, panels[index], images[index]);
+  return canvas;
+}
+
+function renderPreviews() {
+  const container = document.getElementById('previews');
+  container.innerHTML = '';
+  panels.forEach((p, i) => {
+    const canvas = createPanelCanvas(i);
+
+    const preview = document.createElement('canvas');
+    preview.width = W * PREVIEW_SCALE;
+    preview.height = H * PREVIEW_SCALE;
+    const pctx = preview.getContext('2d');
+    pctx.drawImage(canvas, 0, 0, preview.width, preview.height);
+
+    const div = document.createElement('div');
+    div.className = 'preview-item';
+    div.appendChild(preview);
+
+    const label = document.createElement('p');
+    label.textContent = p.label;
+    div.appendChild(label);
+
+    const btn = document.createElement('button');
+    btn.className = 'single-dl';
+    btn.textContent = 'Download';
+    btn.onclick = () => downloadSingle(i);
+    div.appendChild(btn);
+
+    container.appendChild(div);
+  });
+}
+
+function downloadSingle(index) {
+  const canvas = createPanelCanvas(index);
+  const link = document.createElement('a');
+  link.download = 'stress_spinner_' + panels[index].name + '.png';
+  link.href = canvas.toDataURL('image/png');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+async function downloadAll() {
+  const btn = document.getElementById('dlBtn');
+  const status = document.getElementById('status');
+  btn.disabled = true;
+  btn.textContent = 'GENERATING...';
+
+  // Build all canvases and convert to blobs
+  const blobs = [];
+  for (let i = 0; i < panels.length; i++) {
+    status.textContent = `Rendering ${i + 1} / 5...`;
+    const canvas = createPanelCanvas(i);
+    const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+    blobs.push({ name: 'stress_spinner_' + panels[i].name + '.png', blob });
+  }
+
+  // Build ZIP manually (no library needed)
+  status.textContent = 'Packing ZIP...';
+  const zipBlob = await buildZip(blobs);
+
+  const link = document.createElement('a');
+  link.download = 'stress_spinner_store_screenshots.zip';
+  link.href = URL.createObjectURL(zipBlob);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(link.href);
+
+  status.textContent = 'ZIP downloaded! (5 PNG files, 1284x2778 px each)';
+  btn.disabled = false;
+  btn.textContent = 'DOWNLOAD ALL (ZIP)';
+}
+
+// Minimal ZIP builder - no external library
+async function buildZip(files) {
+  const localHeaders = [];
+  const centralHeaders = [];
+  let offset = 0;
+
+  for (const file of files) {
+    const data = new Uint8Array(await file.blob.arrayBuffer());
+    const nameBytes = new TextEncoder().encode(file.name);
+
+    // Local file header
+    const local = new Uint8Array(30 + nameBytes.length + data.length);
+    const lv = new DataView(local.buffer);
+    lv.setUint32(0, 0x04034b50, true);  // signature
+    lv.setUint16(4, 20, true);           // version needed
+    lv.setUint16(6, 0, true);            // flags
+    lv.setUint16(8, 0, true);            // compression: store
+    lv.setUint16(10, 0, true);           // mod time
+    lv.setUint16(12, 0, true);           // mod date
+    lv.setUint32(14, crc32(data), true); // crc32
+    lv.setUint32(18, data.length, true); // compressed size
+    lv.setUint32(22, data.length, true); // uncompressed size
+    lv.setUint16(26, nameBytes.length, true); // name length
+    lv.setUint16(28, 0, true);           // extra length
+    local.set(nameBytes, 30);
+    local.set(data, 30 + nameBytes.length);
+    localHeaders.push(local);
+
+    // Central directory header
+    const central = new Uint8Array(46 + nameBytes.length);
+    const cv = new DataView(central.buffer);
+    cv.setUint32(0, 0x02014b50, true);   // signature
+    cv.setUint16(4, 20, true);            // version made by
+    cv.setUint16(6, 20, true);            // version needed
+    cv.setUint16(8, 0, true);             // flags
+    cv.setUint16(10, 0, true);            // compression
+    cv.setUint16(12, 0, true);            // mod time
+    cv.setUint16(14, 0, true);            // mod date
+    cv.setUint32(16, crc32(data), true);  // crc32
+    cv.setUint32(20, data.length, true);  // compressed
+    cv.setUint32(24, data.length, true);  // uncompressed
+    cv.setUint16(28, nameBytes.length, true); // name length
+    cv.setUint16(30, 0, true);            // extra length
+    cv.setUint16(32, 0, true);            // comment length
+    cv.setUint16(34, 0, true);            // disk start
+    cv.setUint16(36, 0, true);            // internal attrs
+    cv.setUint32(38, 0, true);            // external attrs
+    cv.setUint32(42, offset, true);       // local header offset
+    central.set(nameBytes, 46);
+    centralHeaders.push(central);
+
+    offset += local.length;
+  }
+
+  // End of central directory
+  const centralSize = centralHeaders.reduce((s, c) => s + c.length, 0);
+  const eocd = new Uint8Array(22);
+  const ev = new DataView(eocd.buffer);
+  ev.setUint32(0, 0x06054b50, true);
+  ev.setUint16(4, 0, true);
+  ev.setUint16(6, 0, true);
+  ev.setUint16(8, files.length, true);
+  ev.setUint16(10, files.length, true);
+  ev.setUint32(12, centralSize, true);
+  ev.setUint32(16, offset, true);
+  ev.setUint16(20, 0, true);
+
+  return new Blob([...localHeaders, ...centralHeaders, eocd], { type: 'application/zip' });
+}
+
+function crc32(data) {
+  let crc = 0xFFFFFFFF;
+  for (let i = 0; i < data.length; i++) {
+    crc ^= data[i];
+    for (let j = 0; j < 8; j++) {
+      crc = (crc >>> 1) ^ (crc & 1 ? 0xEDB88320 : 0);
+    }
+  }
+  return (crc ^ 0xFFFFFFFF) >>> 0;
+}
+
+loadImages();
+</script>
+
+</body>
+</html>
