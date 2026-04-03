@@ -18,6 +18,7 @@ import 'smash_screen.dart';
 import 'balloon_pop_screen.dart';
 import 'glass_smash_screen.dart';
 import 'stress_ball_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'game_state.dart';
 import 'l10n/app_localizations.dart';
 import 'main.dart';
@@ -585,6 +586,27 @@ class _SpinnerScreenState extends State<SpinnerScreen>
                       Text(l.aboutRights, style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.3), fontSize: 10,
                       )),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () => launchUrl(Uri.parse('https://arslanaytac11-alt.github.io/stress-carki/privacy-policy.html'), mode: LaunchMode.externalApplication),
+                            child: Text('Privacy Policy', style: TextStyle(
+                              color: const Color(0xFF007AFF), fontSize: 11,
+                              decoration: TextDecoration.underline,
+                              decorationColor: const Color(0xFF007AFF))),
+                          ),
+                          Text('  |  ', style: TextStyle(color: Colors.white.withValues(alpha: 0.2), fontSize: 11)),
+                          GestureDetector(
+                            onTap: () => launchUrl(Uri.parse('https://arslanaytac11-alt.github.io/stress-carki/terms-of-use.html'), mode: LaunchMode.externalApplication),
+                            child: Text('Terms of Use', style: TextStyle(
+                              color: const Color(0xFF007AFF), fontSize: 11,
+                              decoration: TextDecoration.underline,
+                              decorationColor: const Color(0xFF007AFF))),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

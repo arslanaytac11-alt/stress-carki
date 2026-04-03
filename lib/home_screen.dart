@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'l10n/app_localizations.dart';
 import 'main.dart';
 import 'game_state.dart';
@@ -301,6 +302,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       color: Colors.white.withValues(alpha: 0.3), fontSize: 10, height: 1.5)),
                   ],
                 ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () => launchUrl(Uri.parse('https://arslanaytac11-alt.github.io/stress-carki/privacy-policy.html'), mode: LaunchMode.externalApplication),
+                    child: Text('Privacy Policy', style: TextStyle(
+                      color: const Color(0xFF007AFF), fontSize: 12,
+                      decoration: TextDecoration.underline,
+                      decorationColor: const Color(0xFF007AFF))),
+                  ),
+                  Text('  |  ', style: TextStyle(color: Colors.white.withValues(alpha: 0.2), fontSize: 12)),
+                  GestureDetector(
+                    onTap: () => launchUrl(Uri.parse('https://arslanaytac11-alt.github.io/stress-carki/terms-of-use.html'), mode: LaunchMode.externalApplication),
+                    child: Text('Terms of Use', style: TextStyle(
+                      color: const Color(0xFF007AFF), fontSize: 12,
+                      decoration: TextDecoration.underline,
+                      decorationColor: const Color(0xFF007AFF))),
+                  ),
+                ],
               ),
               const SizedBox(height: 12),
               Center(child: Text(l.aboutCopyright, style: TextStyle(
