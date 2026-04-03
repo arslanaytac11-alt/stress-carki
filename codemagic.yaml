@@ -9,12 +9,20 @@ workflows:
       flutter: stable
       xcode: 16.2
     scripts:
+      - name: Initialize keychain
+        script: |
+          keychain initialize
       - name: Fetch signing files
         script: |
+          openssl genrsa -out /tmp/cert_key.pem 2048
           app-store-connect fetch-signing-files com.strescarki.stressCarki \
             --type IOS_APP_STORE \
+            --certificate-key=@file:/tmp/cert_key.pem \
             --create
-      - name: Use profiles
+      - name: Add certificates to keychain
+        script: |
+          keychain add-certificates
+      - name: Set up code signing
         script: |
           xcode-project use-profiles
       - name: Get Flutter packages
