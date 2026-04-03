@@ -9,6 +9,7 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.strescarki.stressCarki
+        provisioning_type: automatic
       flutter: stable
       xcode: latest
     scripts:
