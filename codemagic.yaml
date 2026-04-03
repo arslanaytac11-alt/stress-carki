@@ -10,9 +10,14 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.strescarki.stressCarki
       flutter: stable
-      xcode: latest
+      xcode: 16.2
     scripts:
-      - name: Set up code signing settings on Xcode project
+      - name: Fetch signing files
+        script: |
+          app-store-connect fetch-signing-files com.strescarki.stressCarki \
+            --type IOS_APP_STORE \
+            --create
+      - name: Use profiles
         script: |
           xcode-project use-profiles
       - name: Get Flutter packages
