@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'game_state.dart';
 import 'sound_engine.dart';
 import 'l10n/app_localizations.dart';
+import 'ad_manager.dart';
 
 // ════════════════════════════════════════════════════════════════════
 //  BALON PATLATMA MODU — Premium Efektlerle
@@ -123,6 +124,7 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
   @override
   void initState() {
     super.initState();
+    AdManager.instance.onScreenChange();
     GameState.instance.trackMode('balloon');
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     _loadBest();
@@ -845,6 +847,11 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
                       ),
                   ],
                 ),
+              ),
+              // ── Banner reklam ──
+              const Positioned(
+                left: 0, right: 0, bottom: 0,
+                child: BannerAdWidget(),
               ),
             ],
           ),

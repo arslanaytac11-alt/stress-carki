@@ -6,6 +6,7 @@ import 'spinner_collection.dart';
 import 'space_background_painter.dart';
 import 'game_state.dart';
 import 'l10n/app_localizations.dart';
+import 'ad_manager.dart';
 
 /// Uzay Orbit Modu — spinner uzay boşluğunda dairesel yörüngede hareket eder
 /// ve aynı anda kendi ekseni etrafında döner. Parmakla her iki hareketi kontrol et.
@@ -51,6 +52,7 @@ class _OrbitScreenState extends State<OrbitScreen>
   @override
   void initState() {
     super.initState();
+    AdManager.instance.onScreenChange();
     GameState.instance.trackMode('orbit');
     _gameLoop = AnimationController(
       vsync: this, duration: const Duration(days: 1),
@@ -344,7 +346,7 @@ class _OrbitScreenState extends State<OrbitScreen>
             ),
             // ── Alt bilgi kartı ──
             Positioned(
-              left: 16, right: 16, bottom: 24,
+              left: 16, right: 16, bottom: 74,
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -369,7 +371,7 @@ class _OrbitScreenState extends State<OrbitScreen>
             ),
             // ── Kontrol ipucu ──
             Positioned(
-              left: 0, right: 0, bottom: 100,
+              left: 0, right: 0, bottom: 150,
               child: AnimatedOpacity(
                 opacity: _totalSpins < 3 ? 0.6 : 0.0,
                 duration: const Duration(milliseconds: 500),
@@ -380,6 +382,11 @@ class _OrbitScreenState extends State<OrbitScreen>
                       letterSpacing: 2),
                 ),
               ),
+            ),
+            // ── Banner reklam ──
+            const Positioned(
+              left: 0, right: 0, bottom: 0,
+              child: BannerAdWidget(),
             ),
           ],
         ),

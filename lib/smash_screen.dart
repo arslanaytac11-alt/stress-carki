@@ -6,6 +6,7 @@ import 'space_background_painter.dart';
 import 'collection_screen.dart';
 import 'game_state.dart';
 import 'l10n/app_localizations.dart';
+import 'ad_manager.dart';
 
 /// Parçalama Modu — Gerçek spinner görseli, kademeli hasar, uzayda süzülen parçalar.
 /// Vurdukça kollar tek tek kopuyor, parçalar uzayda sürüklenebilir.
@@ -56,6 +57,7 @@ class _SmashScreenState extends State<SmashScreen>
   @override
   void initState() {
     super.initState();
+    AdManager.instance.onScreenChange();
     GameState.instance.trackMode('smash');
     _activeSpinner = widget.spinnerModel;
     _gameLoop = AnimationController(
@@ -519,6 +521,11 @@ class _SmashScreenState extends State<SmashScreen>
                   ),
                 ],
               ),
+            ),
+            // ── Banner reklam ──
+            const Positioned(
+              left: 0, right: 0, bottom: 0,
+              child: BannerAdWidget(),
             ),
           ],
         ),

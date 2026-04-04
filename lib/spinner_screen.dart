@@ -22,6 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'game_state.dart';
 import 'l10n/app_localizations.dart';
 import 'main.dart';
+import 'ad_manager.dart';
 
 /// Her pointer'ın takip verisi
 class _PointerData {
@@ -87,6 +88,7 @@ class _SpinnerScreenState extends State<SpinnerScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    AdManager.instance.onScreenChange();
     GameState.instance.trackMode('spinner');
     _physics = PhysicsEngine();
     _particles = ParticleSystem();
@@ -719,6 +721,7 @@ class _SpinnerScreenState extends State<SpinnerScreen>
                 Expanded(child: _buildSpinner(colors)),
                 _buildStats(colors),
                 _buildBottomBar(colors),
+                const BannerAdWidget(),
               ],
             ),
           ),

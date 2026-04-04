@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'game_state.dart';
 import 'sound_engine.dart';
 import 'l10n/app_localizations.dart';
+import 'ad_manager.dart';
 
 // ════════════════════════════════════════════════════════════════════
 //  CAM KIRMA MODU — Premium Yeniden Tasarım
@@ -169,6 +170,7 @@ class _GlassSmashScreenState extends State<GlassSmashScreen>
   @override
   void initState() {
     super.initState();
+    AdManager.instance.onScreenChange();
     GameState.instance.trackMode('glass');
     _hp = _objects[0].maxHP;
     _loop = AnimationController(vsync: this, duration: const Duration(days: 1))
@@ -878,7 +880,7 @@ class _GlassSmashScreenState extends State<GlassSmashScreen>
 
               // ── Yenile butonu ──
               Positioned(
-                left: 40, right: 40, bottom: 16,
+                left: 40, right: 40, bottom: 66,
                 child: GestureDetector(
                   onTap: _reset,
                   child: Container(
@@ -907,6 +909,11 @@ class _GlassSmashScreenState extends State<GlassSmashScreen>
                     ),
                   ),
                 ),
+              ),
+              // ── Banner reklam ──
+              const Positioned(
+                left: 0, right: 0, bottom: 0,
+                child: BannerAdWidget(),
               ),
             ],
           ),

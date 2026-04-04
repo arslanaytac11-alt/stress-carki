@@ -4,6 +4,7 @@ import 'physics_engine.dart';
 import 'spinner_painter.dart';
 import 'l10n/app_localizations.dart';
 import 'game_state.dart';
+import 'ad_manager.dart';
 
 /// Nefes egzersizi modu
 /// Spinner belirli bir ritimde döner, kullanıcı nefes alıp verir
@@ -43,6 +44,7 @@ class _BreathScreenState extends State<BreathScreen>
   @override
   void initState() {
     super.initState();
+    AdManager.instance.onScreenChange();
     GameState.instance.trackMode('breath');
     _physics = PhysicsEngine();
 
@@ -141,7 +143,8 @@ class _BreathScreenState extends State<BreathScreen>
             _buildTopBar(context),
             Expanded(child: _buildMain()),
             _buildControls(),
-            const SizedBox(height: 24),
+            const SizedBox(height: 8),
+            const BannerAdWidget(),
           ],
         ),
       ),

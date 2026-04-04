@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'game_state.dart';
+import 'ad_manager.dart';
 
 import 'l10n/app_localizations.dart';
 
@@ -68,6 +69,7 @@ class _StressBallScreenState extends State<StressBallScreen>
   @override
   void initState() {
     super.initState();
+    AdManager.instance.onScreenChange();
     GameState.instance.trackMode('stressball');
     _loopCtrl = AnimationController(vsync: this, duration: const Duration(days: 1))
       ..addListener(_tick)..forward();
@@ -575,7 +577,7 @@ class _StressBallScreenState extends State<StressBallScreen>
 
             // Alt bilgi
             Positioned(
-              bottom: 40, left: 0, right: 0,
+              bottom: 90, left: 0, right: 0,
               child: Column(children: [
                 Text(l?.stressBallHint ?? 'Sık, Bırak, Rahatla',
                   style: TextStyle(color: Colors.white.withValues(alpha: 0.25),
@@ -585,6 +587,11 @@ class _StressBallScreenState extends State<StressBallScreen>
                   style: TextStyle(color: _accent.withValues(alpha: 0.4),
                     fontSize: 12, fontWeight: FontWeight.w700)),
               ]),
+            ),
+            // ── Banner reklam ──
+            const Positioned(
+              left: 0, right: 0, bottom: 0,
+              child: BannerAdWidget(),
             ),
           ],
         ),
