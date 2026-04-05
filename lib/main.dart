@@ -2,20 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'l10n/app_localizations.dart';
 import 'splash_screen.dart';
 import 'game_state.dart';
 import 'audio_engine.dart';
 import 'ad_manager.dart';
 
-final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-final FirebaseAnalyticsObserver analyticsObserver = FirebaseAnalyticsObserver(analytics: analytics);
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   await GameState.instance.init();
   await AudioEngine.instance.init();
   await AdManager.instance.initialize();
@@ -81,7 +75,7 @@ class _StressCarkiAppState extends State<StressCarkiApp> with WidgetsBindingObse
     return MaterialApp(
       onGenerateTitle: (ctx) => AppLocalizations.of(ctx)?.appTitle ?? 'Stres Çarkı',
       debugShowCheckedModeBanner: false,
-      navigatorObservers: [analyticsObserver],
+      navigatorObservers: [],
       locale: _locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
