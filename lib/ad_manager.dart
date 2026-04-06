@@ -61,6 +61,14 @@ class AdManager {
   Future<void> initialize() async {
     if (_initialized) return;
     await MobileAds.instance.initialize();
+    // Cocuklara uygun reklam icerigi (4+ yas derecesi icin)
+    await MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(
+        maxAdContentRating: MaxAdContentRating.g,
+        tagForChildDirectedTreatment: TagForChildDirectedTreatment.yes,
+        tagForUnderAgeOfConsent: TagForUnderAgeOfConsent.yes,
+      ),
+    );
     _initialized = true;
     _loadInterstitialAd();
     _loadRewardedAd();
