@@ -37,7 +37,7 @@ class _BreathScreenState extends State<BreathScreen>
 
   List<String> _getCalmMessages(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    return [l.breathQuote1, l.breathQuote2, l.breathQuote3, 'Sadece nefesine odaklan 🌊',
+    return [l.breathQuote1, l.breathQuote2, l.breathQuote3, l.breathQuote8,
       l.breathQuote4, l.breathQuote5, l.breathQuote6, l.breathQuote7];
   }
 
@@ -161,7 +161,7 @@ class _BreathScreenState extends State<BreathScreen>
             onPressed: () => Navigator.pop(context),
           ),
           Text(
-            AppLocalizations.of(context)?.menuBreath.toUpperCase() ?? 'NEFES MODU',
+            AppLocalizations.of(context)!.menuBreath.toUpperCase(),
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -296,9 +296,9 @@ class _BreathScreenState extends State<BreathScreen>
                 color: Colors.white60, fontSize: 20, letterSpacing: 1),
           ),
           const SizedBox(height: 8),
-          const Text(
-            '4s nefes al · 4s tut · 6s nefes ver',
-            style: TextStyle(color: Colors.white30, fontSize: 13),
+          Text(
+            AppLocalizations.of(context)!.breathTimingGuide,
+            style: const TextStyle(color: Colors.white30, fontSize: 13),
           ),
           const SizedBox(height: 12),
           Text(
@@ -319,19 +319,19 @@ class _BreathScreenState extends State<BreathScreen>
     switch (_phase) {
       case BreathPhase.inhale:
         return _PhaseInfo(
-          label: 'NEFES AL',
+          label: AppLocalizations.of(context)!.breathPhaseInhale,
           instruction: AppLocalizations.of(context)!.breathInhale,
           color: const Color(0xFF4FC3F7),
         );
       case BreathPhase.hold:
         return _PhaseInfo(
-          label: 'TUT',
-          instruction: 'Hold',
+          label: AppLocalizations.of(context)!.breathPhaseHold,
+          instruction: AppLocalizations.of(context)!.breathHoldInstruction,
           color: const Color(0xFFB39DDB),
         );
       case BreathPhase.exhale:
         return _PhaseInfo(
-          label: 'NEFES VER',
+          label: AppLocalizations.of(context)!.breathPhaseExhale,
           instruction: AppLocalizations.of(context)!.breathExhale,
           color: const Color(0xFF80CBC4),
         );

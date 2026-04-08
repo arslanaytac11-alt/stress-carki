@@ -82,6 +82,12 @@
   "breathQuote5": "Vide ton esprit, détends ton corps 🧘",
   "breathQuote6": "Ce moment est juste pour toi 🌸",
   "breathQuote7": "La paix grandit à chaque souffle 🌙",
+  "breathQuote8": "Concentre-toi uniquement sur ta respiration 🌊",
+  "breathPhaseInhale": "INSPIREZ",
+  "breathPhaseHold": "RETENEZ",
+  "breathPhaseExhale": "EXPIREZ",
+  "breathHoldInstruction": "Retenez votre souffle",
+  "breathTimingGuide": "4s inspirer · 4s retenir · 6s expirer",
 
   "skinRedMetal": "Métal Rouge",
   "skinBlueMetal": "Métal Bleu",

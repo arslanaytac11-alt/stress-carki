@@ -86,6 +86,12 @@
   "breathQuote5": "Zihni boşalt, bedeni gevşet 🧘",
   "breathQuote6": "Bu an sadece senin için 🌸",
   "breathQuote7": "Huzur her nefeste büyüyor 🌙",
+  "breathQuote8": "Sadece nefesine odaklan 🌊",
+  "breathPhaseInhale": "NEFES AL",
+  "breathPhaseHold": "TUT",
+  "breathPhaseExhale": "NEFES VER",
+  "breathHoldInstruction": "Nefesini tut",
+  "breathTimingGuide": "4s nefes al · 4s tut · 6s nefes ver",
 
   "skinRedMetal": "Kırmızı Metal",
   "skinBlueMetal": "Mavi Metal",

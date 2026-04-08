@@ -82,6 +82,12 @@
   "breathQuote5": "Leere deinen Geist, entspanne den Körper 🧘",
   "breathQuote6": "Dieser Moment gehört nur dir 🌸",
   "breathQuote7": "Frieden wächst mit jedem Atemzug 🌙",
+  "breathQuote8": "Konzentriere dich nur auf deinen Atem 🌊",
+  "breathPhaseInhale": "EINATMEN",
+  "breathPhaseHold": "HALTEN",
+  "breathPhaseExhale": "AUSATMEN",
+  "breathHoldInstruction": "Halte den Atem an",
+  "breathTimingGuide": "4s einatmen · 4s halten · 6s ausatmen",
 
   "skinRedMetal": "Rotes Metall",
   "skinBlueMetal": "Blaues Metall",

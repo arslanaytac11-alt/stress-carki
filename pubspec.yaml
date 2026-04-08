@@ -1,7 +1,7 @@
 name: stress_carki
 description: "Stres Çarkı - Fidget Spinner Oyunu"
 publish_to: 'none'
-version: 1.0.1+2
+version: 1.0.2+9
 
 environment:
   sdk: ^3.11.1
@@ -39,5 +39,6 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
+    - assets/app_icon_1024x1024.png
     - assets/audio/
     - assets/images/

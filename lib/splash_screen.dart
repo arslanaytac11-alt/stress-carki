@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen>
               decoration: const BoxDecoration(
                 gradient: RadialGradient(
                   center: Alignment(0, -0.2), radius: 1.0,
-                  colors: [Color(0xFF150808), Color(0xFF03020A)],
+                  colors: [Color(0xFF0D0820), Color(0xFF03020A)],
                 ),
               ),
             ),
@@ -107,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen>
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color(0xFFCC3333).withValues(alpha: (1 - _ring.value) * 0.4),
+                        color: const Color(0xFFBB44DD).withValues(alpha: (1 - _ring.value) * 0.4),
                         width: 2,
                       ),
                     ),
@@ -128,19 +128,17 @@ class _SplashScreenState extends State<SplashScreen>
                         width: 100, height: 100,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: const RadialGradient(
-                            colors: [Color(0xFFDC3232), Color(0xFFCC3333), Color(0xFF8C1423)],
-                            stops: [0.0, 0.5, 1.0],
-                          ),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFCC3333).withValues(alpha: 0.4 + _pulse.value * 0.2),
+                              color: const Color(0xFFBB44DD).withValues(alpha: 0.4 + _pulse.value * 0.2),
                               blurRadius: 30 + _pulse.value * 15,
                               spreadRadius: 2,
                             ),
                           ],
                         ),
-                        child: const Icon(Icons.cyclone, color: Colors.white, size: 48),
+                        child: ClipOval(
+                          child: Image.asset('assets/app_icon_1024x1024.png', width: 100, height: 100, fit: BoxFit.cover),
+                        ),
                       ),
                     ),
                   ),
@@ -179,7 +177,7 @@ class _SplashScreenState extends State<SplashScreen>
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
                       valueColor: AlwaysStoppedAnimation(
-                        const Color(0xFFCC3333).withValues(alpha: 0.5),
+                        const Color(0xFFBB44DD).withValues(alpha: 0.5),
                       ),
                     ),
                   ),

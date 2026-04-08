@@ -245,6 +245,24 @@ class AppLocalizationsTr extends AppLocalizations {
   String get breathQuote7 => 'Huzur her nefeste büyüyor 🌙';
 
   @override
+  String get breathQuote8 => 'Sadece nefesine odaklan 🌊';
+
+  @override
+  String get breathPhaseInhale => 'NEFES AL';
+
+  @override
+  String get breathPhaseHold => 'TUT';
+
+  @override
+  String get breathPhaseExhale => 'NEFES VER';
+
+  @override
+  String get breathHoldInstruction => 'Nefesini tut';
+
+  @override
+  String get breathTimingGuide => '4s nefes al · 4s tut · 6s nefes ver';
+
+  @override
   String get skinRedMetal => 'Kırmızı Metal';
 
   @override

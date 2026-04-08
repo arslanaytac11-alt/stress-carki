@@ -245,6 +245,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get breathQuote7 => 'Frieden wächst mit jedem Atemzug 🌙';
 
   @override
+  String get breathQuote8 => 'Konzentriere dich nur auf deinen Atem 🌊';
+
+  @override
+  String get breathPhaseInhale => 'EINATMEN';
+
+  @override
+  String get breathPhaseHold => 'HALTEN';
+
+  @override
+  String get breathPhaseExhale => 'AUSATMEN';
+
+  @override
+  String get breathHoldInstruction => 'Halte den Atem an';
+
+  @override
+  String get breathTimingGuide => '4s einatmen · 4s halten · 6s ausatmen';
+
+  @override
   String get skinRedMetal => 'Rotes Metall';
 
   @override

@@ -554,6 +554,42 @@ abstract class AppLocalizations {
   /// **'Huzur her nefeste büyüyor 🌙'**
   String get breathQuote7;
 
+  /// No description provided for @breathQuote8.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sadece nefesine odaklan 🌊'**
+  String get breathQuote8;
+
+  /// No description provided for @breathPhaseInhale.
+  ///
+  /// In tr, this message translates to:
+  /// **'NEFES AL'**
+  String get breathPhaseInhale;
+
+  /// No description provided for @breathPhaseHold.
+  ///
+  /// In tr, this message translates to:
+  /// **'TUT'**
+  String get breathPhaseHold;
+
+  /// No description provided for @breathPhaseExhale.
+  ///
+  /// In tr, this message translates to:
+  /// **'NEFES VER'**
+  String get breathPhaseExhale;
+
+  /// No description provided for @breathHoldInstruction.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nefesini tut'**
+  String get breathHoldInstruction;
+
+  /// No description provided for @breathTimingGuide.
+  ///
+  /// In tr, this message translates to:
+  /// **'4s nefes al · 4s tut · 6s nefes ver'**
+  String get breathTimingGuide;
+
   /// No description provided for @skinRedMetal.
   ///
   /// In tr, this message translates to:
